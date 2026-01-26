@@ -1,0 +1,13 @@
+.main {
+	width: 100%;
+	max-width: 1360px;
+	flex-grow: 1;
+}
+
+.container {
+	padding: 24px;
+	background-color: var(--white);
+	border-radius: 8px;
+	box-shadow: 0px 3px 3px var(--box-shadow);
+	border: 1px solid var(--border);
+}
