@@ -1,5 +1,4 @@
-.container_books {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 36px;
+.container_buttons {
+	display: flex;
+	gap: 12px;
 }

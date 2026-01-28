@@ -42,7 +42,16 @@ export const Books = () => {
 
 			<ContainerUI variant="books">
 				{books.map((book) => (
-					<Book key={book.id} name={book.name} />
+					<Book
+						key={book.id}
+						name={book.name}
+						category={book.category}
+						status={book.status}
+						startDate={book.startDate}
+						endDate={book.endDate}
+						favorite={book.favorite}
+						pagesQuantity={book.pagesQuantity}
+					/>
 				))}
 			</ContainerUI>
 		</section>
