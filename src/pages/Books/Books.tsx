@@ -1,6 +1,9 @@
 import { useState } from "react";
 import styles from "./Books.module.css";
 import { Book } from "../../features/books/components/Book/Book";
+import { ContainerUI } from "../../shared/components/ContainerUI/ContainerUI";
+import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSection";
+import { Button } from "../../shared/components/Button/Button";
 
 const initialBooks = [
 	{
@@ -30,13 +33,18 @@ export const Books = () => {
 
 	return (
 		<section className={styles.section}>
-			<h1>Categories</h1>
+			<HeaderSection title="Livros">
+				<div className={`${styles.container_buttons}`}>
+					<Button>Adicionar</Button>
+					<Button icon="filter">Filtrar</Button>
+				</div>
+			</HeaderSection>
 
-			<div className={styles.container_books}>
+			<ContainerUI variant="books">
 				{books.map((book) => (
 					<Book key={book.id} name={book.name} />
 				))}
-			</div>
+			</ContainerUI>
 		</section>
 	);
 };
