@@ -8,7 +8,7 @@ type HeaderSection = {
 
 export const HeaderSection = ({ children, title }: HeaderSection) => {
 	return (
-		<div className={styles.header_section}>
+		<div className={styles.header}>
 			<h1>{title}</h1>
 			{children}
 		</div>

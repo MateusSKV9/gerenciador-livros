@@ -1,0 +1,12 @@
+.flag {
+	padding: 4px;
+	background-color: var(--secondary);
+	width: max-content;
+	min-width: 90px;
+	font-size: 0.9rem;
+
+	text-align: center;
+	border: 1px solid var(--black);
+	border-radius: 4px;
+	font-weight: 500;
+}
