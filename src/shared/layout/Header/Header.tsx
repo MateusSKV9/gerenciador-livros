@@ -18,12 +18,12 @@ export const Header = () => {
 				<nav className={styles.nav}>
 					<ul className={styles.list}>
 						<li className={styles.item}>
-							<Link className={styles.link} to="/">
+							<Link className={`${styles.link} button_behavior`} to="/">
 								Início
 							</Link>
 						</li>
 						<li className={styles.item}>
-							<Link className={styles.link} to="/categories">
+							<Link className={`${styles.link} button_behavior`} to="/categories">
 								Categories
 							</Link>
 						</li>
@@ -40,7 +40,7 @@ export const Header = () => {
 					<input className={styles.input} type="text" name="search" id="search" placeholder="Pesquisar" />
 				</div>
 
-				<button className={styles.button_theme} type="button" title="Tema">
+				<button className={`${styles.button_theme} button_behavior`} type="button" title="Tema">
 					<svg className={styles.icon_theme} width="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
 						<path
 							fill="currentColor"

@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-  gap: 2px;
+	gap: 2px;
 
 	font-size: 1.1rem;
 	padding: 4px 12px;
@@ -14,17 +14,4 @@
 	box-shadow: 0px 3px 0px var(--black);
 	color: var(--black);
 	border: 1px solid var(--black);
-
-	transition: all 0.15s ease;
-	cursor: pointer;
-
-	&:hover {
-		transform: translateY(-2px);
-		box-shadow: 0px 6px 0px var(--black);
-	}
-
-	&:active {
-		transform: translateY(2px);
-		box-shadow: 0px 0px 0px var(--black);
-	}
 }

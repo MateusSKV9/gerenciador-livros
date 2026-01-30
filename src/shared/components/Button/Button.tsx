@@ -21,7 +21,7 @@ type ButtonProps = {
 
 export const Button = ({ children, icon }: ButtonProps) => {
 	return (
-		<button className={styles.button} type="button">
+		<button className={`${styles.button} button_behavior`} type="button">
 			{icon && ICONS[icon]}
 			{children}
 		</button>

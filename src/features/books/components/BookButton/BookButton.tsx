@@ -38,7 +38,7 @@ type BookButtonProps = {
 
 export const BookButton = ({ children, styleType, icon }: BookButtonProps) => {
 	return (
-		<button className={`${styles.button} ${styles[styleType]}`} type="button">
+		<button className={`${styles.button} ${styles[styleType]} button_behavior`} type="button">
 			{icon && ICONS[icon]}
 			{children}
 		</button>
