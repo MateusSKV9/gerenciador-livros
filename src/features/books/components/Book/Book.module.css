@@ -41,6 +41,22 @@
 	font-size: 1.3rem;
 }
 
+.favorite_button {
+	box-sizing: 0px 2px 2px black;
+	border: 2px solid black;
+}
+
+.icon_favorite {
+	color: transparent;
+	stroke: var(--black);
+	stroke-width: 30px;
+	transition: all 0.15s ease;
+}
+
+.icon_favorite.favorited {
+	color: var(--yellow);
+}
+
 .wrapper_col {
 	display: flex;
 	flex-direction: column;
@@ -85,14 +101,29 @@
 	font-weight: 500;
 }
 
-.add_button {
-	background-color: var(--green);
+.progresss_button {
 	color: var(--black);
 	font-weight: bold;
-	padding: 4px;
+	padding: 2px;
 	border: none;
 	border-radius: 4px;
-	border: 2px solid var(--black);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	border: 1px solid var(--black);
+}
+
+.minus_button {
+	background: var(--red);
+}
+
+.plus_button {
+	background-color: var(--green);
+}
+
+.progress_icon {
+	width: 16px;
 }
 
 .progress {
@@ -114,5 +145,5 @@
 .footer {
 	display: flex;
 	flex-direction: column;
-	gap: 4px;
+	gap: 6px;
 }

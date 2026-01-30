@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { Flag } from "../../../../shared/components/Flag/Flag";
 import { BookButton } from "../BookButton/BookButton";
 import styles from "./Book.module.css";
+import { format, parseISO } from "date-fns";
 
 type BookProps = {
 	name: string;
-	pagesQuantity: number;
+	totalPages: number;
+	currentPages: number;
 	category: string;
 	status: string;
 	favorite: boolean;
@@ -12,16 +15,38 @@ type BookProps = {
 	endDate: string;
 };
 
-export const Book = ({ name, category, status, startDate, endDate, pagesQuantity }: BookProps) => {
+export const Book = ({ name, category, status, startDate, endDate, totalPages, currentPages, favorite }: BookProps) => {
+	const [pagesRead, setPagesRead] = useState(currentPages);
+	const [favorited, setFavorited] = useState(favorite);
+
+	const percentage = (pagesRead / totalPages) * 100;
+	const currentProgress = Math.min(100, Math.max(0, Math.floor(percentage)));
+
+	const handleIncrease = () => setPagesRead((prev) => prev + 1);
+	const handleDecrease = () => setPagesRead((prev) => prev - 1);
+	const handleFavorite = () => setFavorited((prev) => !prev);
+
+	const displayDate = (date: string) => (date ? format(parseISO(date), "dd/mm/yyyy") : "--/--/----");
+
 	return (
 		<article className={styles.book}>
 			<header className={styles.header}>
 				<div className={styles.wrapper_intro}>
-					<button className={styles.button} type="button" title="favorite">
-						<svg width={30} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+					<button
+						onClick={handleFavorite}
+						className={`${styles.button} ${styles.favorite_button}`}
+						type="button"
+						title="favorite"
+					>
+						<svg
+							className={`${styles.icon_favorite} ${favorited && styles.favorited}`}
+							width={28}
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 640 640"
+						>
 							<path
 								fill="currentColor"
-								d="M320.1 32C329.1 32 337.4 37.1 341.5 45.1L415 189.3L574.9 214.7C583.8 216.1 591.2 222.4 594 231C596.8 239.6 594.5 249 588.2 255.4L473.7 369.9L499 529.8C500.4 538.7 496.7 547.7 489.4 553C482.1 558.3 472.4 559.1 464.4 555L320.1 481.6L175.8 555C167.8 559.1 158.1 558.3 150.8 553C143.5 547.7 139.8 538.8 141.2 529.8L166.4 369.9L52 255.4C45.6 249 43.4 239.6 46.2 231C49 222.4 56.3 216.1 65.3 214.7L225.2 189.3L298.8 45.1C302.9 37.1 311.2 32 320.2 32zM320.1 108.8L262.3 222C258.8 228.8 252.3 233.6 244.7 234.8L119.2 254.8L209 344.7C214.4 350.1 216.9 357.8 215.7 365.4L195.9 490.9L309.2 433.3C316 429.8 324.1 429.8 331 433.3L444.3 490.9L424.5 365.4C423.3 357.8 425.8 350.1 431.2 344.7L521 254.8L395.5 234.8C387.9 233.6 381.4 228.8 377.9 222L320.1 108.8z"
+								d="M341.5 45.1C337.4 37.1 329.1 32 320.1 32C311.1 32 302.8 37.1 298.7 45.1L225.1 189.3L65.2 214.7C56.3 216.1 48.9 222.4 46.1 231C43.3 239.6 45.6 249 51.9 255.4L166.3 369.9L141.1 529.8C139.7 538.7 143.4 547.7 150.7 553C158 558.3 167.6 559.1 175.7 555L320.1 481.6L464.4 555C472.4 559.1 482.1 558.3 489.4 553C496.7 547.7 500.4 538.8 499 529.8L473.7 369.9L588.1 255.4C594.5 249 596.7 239.6 593.9 231C591.1 222.4 583.8 216.1 574.8 214.7L415 189.3L341.5 45.1z"
 							/>
 						</svg>
 					</button>
@@ -50,26 +75,57 @@ export const Book = ({ name, category, status, startDate, endDate, pagesQuantity
 
 				<div className={styles.container_dates}>
 					<span>
-						<strong>Início:</strong> {startDate}
+						<strong>Início:</strong> {displayDate(startDate)}
 					</span>
 					<span>
-						<strong>Término:</strong> {endDate}
+						<strong>Término:</strong> {displayDate(endDate)}
 					</span>
 				</div>
 			</div>
 
 			<footer className={styles.footer}>
 				<div className={styles.wrapper}>
+					<button
+						onClick={handleDecrease}
+						className={`${styles.progresss_button} ${styles.minus_button} button_behavior`}
+						type="button"
+						title="Adicionar Páginas"
+						disabled={pagesRead === 0}
+					>
+						<svg
+							width={20}
+							className={`${styles.progresss_icon}`}
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 640 640"
+						>
+							<path
+								fill="currentColor"
+								d="M96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320z"
+							/>
+						</svg>
+					</button>
 					<input
 						className={styles.input}
 						type="text"
 						name="pagesQuantity"
 						id="pagesQuantity"
-						value={`${0}/${pagesQuantity}`}
+						value={`${pagesRead.toString()}/${totalPages.toString()}`}
 						title="Quantidade de páginas"
+						readOnly
 					/>
-					<button className={`${styles.button} ${styles.add_button}`} type="button" title="Adicionar Páginas">
-						<svg width={20} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+					<button
+						onClick={handleIncrease}
+						className={`${styles.progresss_button} ${styles.plus_button} button_behavior`}
+						type="button"
+						title="Adicionar Páginas"
+						disabled={pagesRead === totalPages}
+					>
+						<svg
+							className={`${styles.progresss_icon}`}
+							width={20}
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 640 640"
+						>
 							<path
 								fill="currentColor"
 								d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"
@@ -77,8 +133,8 @@ export const Book = ({ name, category, status, startDate, endDate, pagesQuantity
 						</svg>
 					</button>
 				</div>
-        
-				<progress value={30} max={100} className={styles.progress} />
+
+				<progress value={currentProgress} max={100} className={styles.progress} />
 			</footer>
 		</article>
 	);

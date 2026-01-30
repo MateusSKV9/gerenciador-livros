@@ -9,7 +9,8 @@ const initialBooks = [
 	{
 		id: 1,
 		name: "Cartas de um diabo a seu aprendiz",
-		pagesQuantity: 343,
+		totalPages: 343,
+		currentPages: 120,
 		category: "Cristão",
 		status: "Concluído",
 		favorite: false,
@@ -19,8 +20,20 @@ const initialBooks = [
 	{
 		id: 2,
 		name: "Bíblia",
-		pagesQuantity: 1453,
+		totalPages: 1453,
+		currentPages: 853,
 		category: "Bíblia",
+		status: "Lendo",
+		favorite: true,
+		startDate: "2026-01-27",
+		endDate: "2026-12-12",
+	},
+	{
+		id: 3,
+		name: "A Pirâmide da Sabedoria",
+		totalPages: 501,
+		currentPages: 499,
+		category: "Cristão",
 		status: "Lendo",
 		favorite: true,
 		startDate: "2026-01-27",
@@ -50,7 +63,8 @@ export const Books = () => {
 						startDate={book.startDate}
 						endDate={book.endDate}
 						favorite={book.favorite}
-						pagesQuantity={book.pagesQuantity}
+						totalPages={book.totalPages}
+						currentPages={book.currentPages}
 					/>
 				))}
 			</ContainerUI>
