@@ -38,6 +38,16 @@ export const Book = ({ name, category, status, startDate, endDate, totalPages, c
 		else setCurrentStatus("reading");
 	};
 
+	const handleClick = () => {
+		if (currentStatus === "to_read" || currentStatus === "completed") {
+			setCurrentStatus("reading");
+			setPagesRead(0);
+		} else {
+			setCurrentStatus("completed");
+			setPagesRead(totalPages);
+		}
+	};
+
 	const handleFavorite = () => {
 		setFavorited((prev) => !prev);
 	};
@@ -85,7 +95,7 @@ export const Book = ({ name, category, status, startDate, endDate, totalPages, c
 			</header>
 
 			<div className={styles.body}>
-				<BookButton styleType={currentStatus} icon={currentStatus}>
+				<BookButton handleClick={handleClick} styleType={currentStatus} icon={currentStatus}>
 					{`${
 						currentStatus === "to_read" ? "Iniciar" : currentStatus === "reading" ? "Finaliar" : "Reiniciar"
 					}  Leitura`}
@@ -103,25 +113,28 @@ export const Book = ({ name, category, status, startDate, endDate, totalPages, c
 
 			<footer className={styles.footer}>
 				<div className={styles.wrapper}>
-					<button
-						onClick={handleDecrease}
-						className={`${styles.progresss_button} ${styles.minus_button} button_behavior`}
-						type="button"
-						title="Adicionar Páginas"
-						disabled={pagesRead === 0}
-					>
-						<svg
-							width={20}
-							className={`${styles.progresss_icon}`}
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 640 640"
+					{currentStatus !== "to_read" && (
+						<button
+							onClick={handleDecrease}
+							className={`${styles.progresss_button} ${styles.minus_button} button_behavior`}
+							type="button"
+							title="Adicionar Páginas"
+							disabled={pagesRead === 0}
 						>
-							<path
-								fill="currentColor"
-								d="M96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320z"
-							/>
-						</svg>
-					</button>
+							<svg
+								width={20}
+								className={`${styles.progresss_icon}`}
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 640 640"
+							>
+								<path
+									fill="currentColor"
+									d="M96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320z"
+								/>
+							</svg>
+						</button>
+					)}
+
 					<input
 						className={styles.input}
 						type="text"
@@ -131,28 +144,32 @@ export const Book = ({ name, category, status, startDate, endDate, totalPages, c
 						title="Quantidade de páginas"
 						readOnly
 					/>
-					<button
-						onClick={handleIncrease}
-						className={`${styles.progresss_button} ${styles.plus_button} button_behavior`}
-						type="button"
-						title="Adicionar Páginas"
-						disabled={pagesRead === totalPages}
-					>
-						<svg
-							className={`${styles.progresss_icon}`}
-							width={20}
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 640 640"
+					{currentStatus !== "to_read" && (
+						<button
+							onClick={handleIncrease}
+							className={`${styles.progresss_button} ${styles.plus_button} button_behavior`}
+							type="button"
+							title="Adicionar Páginas"
+							disabled={pagesRead === totalPages}
 						>
-							<path
-								fill="currentColor"
-								d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"
-							/>
-						</svg>
-					</button>
+							<svg
+								className={`${styles.progresss_icon}`}
+								width={20}
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 640 640"
+							>
+								<path
+									fill="currentColor"
+									d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"
+								/>
+							</svg>
+						</button>
+					)}
 				</div>
 
-				<progress value={currentProgress} max={100} className={styles.progress} />
+				{(currentStatus === "reading" || currentStatus === "completed") && (
+					<progress value={currentProgress} max={100} className={styles.progress} />
+				)}
 			</footer>
 		</article>
 	);
