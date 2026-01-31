@@ -4,15 +4,28 @@ import { Book } from "../../features/books/components/Book/Book";
 import { ContainerUI } from "../../shared/components/ContainerUI/ContainerUI";
 import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSection";
 import { Button } from "../../shared/components/Button/Button";
+import type { BookStatus } from "../../utils/book.types";
 
-const initialBooks = [
+type BookType = {
+	id: number;
+	name: string;
+	totalPages: number;
+	currentPages: number;
+	category: string;
+	status: BookStatus;
+	favorite: boolean;
+	startDate: string;
+	endDate: string;
+};
+
+const initialBooks: BookType[] = [
 	{
 		id: 1,
 		name: "Cartas de um diabo a seu aprendiz",
-		totalPages: 343,
-		currentPages: 120,
+		totalPages: 206,
+		currentPages: 0,
 		category: "Cristão",
-		status: "Concluído",
+		status: "to_read",
 		favorite: false,
 		startDate: "2026-01-27",
 		endDate: "2026-12-12",
@@ -20,10 +33,10 @@ const initialBooks = [
 	{
 		id: 2,
 		name: "Bíblia",
-		totalPages: 1453,
-		currentPages: 853,
+		totalPages: 1363,
+		currentPages: 0,
 		category: "Bíblia",
-		status: "Lendo",
+		status: "to_read",
 		favorite: true,
 		startDate: "2026-01-27",
 		endDate: "2026-12-12",
@@ -31,10 +44,21 @@ const initialBooks = [
 	{
 		id: 3,
 		name: "A Pirâmide da Sabedoria",
-		totalPages: 501,
-		currentPages: 499,
+		totalPages: 203,
+		currentPages: 0,
 		category: "Cristão",
-		status: "Lendo",
+		status: "to_read",
+		favorite: true,
+		startDate: "2026-01-27",
+		endDate: "2026-12-12",
+	},
+	{
+		id: 4,
+		name: "Princípios Elementares",
+		totalPages: 10,
+		currentPages: 0,
+		category: "Cristão",
+		status: "to_read",
 		favorite: true,
 		startDate: "2026-01-27",
 		endDate: "2026-12-12",

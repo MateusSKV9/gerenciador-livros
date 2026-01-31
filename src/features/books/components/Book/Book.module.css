@@ -23,18 +23,18 @@
 	display: flex;
 	justify-content: space-between;
 	border-bottom: 1px solid var(--box-shadow);
-	padding-bottom: 4px;
+	padding-bottom: 6px;
 }
 
 .body {
 	margin-top: auto;
 	display: flex;
 	flex-direction: column;
-	gap: 12px;
+	gap: 16px;
 	border-top: 1px solid var(--box-shadow);
-	padding-top: 8px;
+	padding-top: 10px;
 	border-bottom: 1px solid var(--box-shadow);
-	padding-bottom: 8px;
+	padding-bottom: 10px;
 }
 
 .name {

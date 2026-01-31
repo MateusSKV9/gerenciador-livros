@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import styles from "./BookButton.module.css";
 
 const ICONS = {
-	start: (
+	to_read: (
 		<svg width={28} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
 			<path
 				fill="currentColor"
@@ -10,7 +10,7 @@ const ICONS = {
 			/>
 		</svg>
 	),
-	complete: (
+	reading: (
 		<svg width={28} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
 			<path
 				fill="currentColor"
@@ -18,7 +18,7 @@ const ICONS = {
 			/>
 		</svg>
 	),
-	restart: (
+	completed: (
 		<svg width={28} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
 			<path
 				fill="currentColor"

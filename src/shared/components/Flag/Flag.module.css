@@ -10,3 +10,11 @@
 	border-radius: 4px;
 	font-weight: 500;
 }
+
+.reading {
+	background-color: var(--yellow);
+}
+
+.completed {
+	background-color: var(--green);
+}

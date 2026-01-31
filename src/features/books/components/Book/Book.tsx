@@ -3,13 +3,14 @@ import { Flag } from "../../../../shared/components/Flag/Flag";
 import { BookButton } from "../BookButton/BookButton";
 import styles from "./Book.module.css";
 import { format, parseISO } from "date-fns";
+import { type BookStatus } from "../../../../utils/book.types";
 
 type BookProps = {
 	name: string;
 	totalPages: number;
 	currentPages: number;
 	category: string;
-	status: string;
+	status: BookStatus;
 	favorite: boolean;
 	startDate: string;
 	endDate: string;
@@ -19,14 +20,29 @@ export const Book = ({ name, category, status, startDate, endDate, totalPages, c
 	const [pagesRead, setPagesRead] = useState(currentPages);
 	const [favorited, setFavorited] = useState(favorite);
 
+	const [currentStatus, setCurrentStatus] = useState(status);
+
 	const percentage = (pagesRead / totalPages) * 100;
 	const currentProgress = Math.min(100, Math.max(0, Math.floor(percentage)));
 
-	const handleIncrease = () => setPagesRead((prev) => prev + 1);
-	const handleDecrease = () => setPagesRead((prev) => prev - 1);
-	const handleFavorite = () => setFavorited((prev) => !prev);
+	const handleIncrease = () => {
+		setPagesRead((prev) => prev + 1);
 
-	const displayDate = (date: string) => (date ? format(parseISO(date), "dd/mm/yyyy") : "--/--/----");
+		if (pagesRead < totalPages - 1) setCurrentStatus("reading");
+		else setCurrentStatus("completed");
+	};
+
+	const handleDecrease = () => {
+		setPagesRead((prev) => prev - 1);
+		if (pagesRead === 1) setCurrentStatus("to_read");
+		else setCurrentStatus("reading");
+	};
+
+	const handleFavorite = () => {
+		setFavorited((prev) => !prev);
+	};
+
+	const displayDate = (date: string) => (date ? format(parseISO(date), "dd/MM/yyyy") : "--/--/----");
 
 	return (
 		<article className={styles.book}>
@@ -64,13 +80,15 @@ export const Book = ({ name, category, status, startDate, endDate, totalPages, c
 					<h2 className={styles.name}>{name}</h2>
 
 					<Flag text={category} />
-					<Flag text={status} />
+					<Flag text={currentStatus} variant={currentStatus} />
 				</div>
 			</header>
 
 			<div className={styles.body}>
-				<BookButton styleType="start" icon="start">
-					Iniciar Leitura
+				<BookButton styleType={currentStatus} icon={currentStatus}>
+					{`${
+						currentStatus === "to_read" ? "Iniciar" : currentStatus === "reading" ? "Finaliar" : "Reiniciar"
+					}  Leitura`}
 				</BookButton>
 
 				<div className={styles.container_dates}>

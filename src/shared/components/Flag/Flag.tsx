@@ -1,9 +1,19 @@
+import { BOOK_STATUS, type BookStatus } from "../../../utils/book.types";
 import styles from "./Flag.module.css";
 
 type FlagProps = {
 	text: string;
+	variant?: BookStatus;
 };
 
-export const Flag = ({ text }: FlagProps) => {
-	return <div className={styles.flag}>{text}</div>;
+const STYLE_STATUS: Record<BookStatus | string, string> = {
+	to_read: styles.default,
+	reading: styles.reading,
+	completed: styles.completed,
+};
+
+export const Flag = ({ text, variant }: FlagProps) => {
+	return (
+		<div className={`${styles.flag} ${variant && STYLE_STATUS[variant]}`}>{variant ? BOOK_STATUS[variant] : text}</div>
+	);
 };
