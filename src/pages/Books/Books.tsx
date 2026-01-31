@@ -5,6 +5,8 @@ import { ContainerUI } from "../../shared/components/ContainerUI/ContainerUI";
 import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSection";
 import { Button } from "../../shared/components/Button/Button";
 import type { BookStatus } from "../../utils/book.types";
+import { Modal } from "../../shared/components/Modal/Modal";
+import { UseModal } from "../../hooks/UseModal";
 
 type BookType = {
 	id: number;
@@ -67,31 +69,38 @@ const initialBooks: BookType[] = [
 
 export const Books = () => {
 	const [books] = useState(initialBooks);
+	const { modal, showModal, CloseModal } = UseModal();
 
 	return (
-		<section className={styles.section}>
-			<HeaderSection title="Livros">
-				<div className={`${styles.container_buttons}`}>
-					<Button>Adicionar</Button>
-					<Button icon="filter">Filtrar</Button>
-				</div>
-			</HeaderSection>
+		<>
+			<section className={styles.section}>
+				<HeaderSection title="Livros">
+					<div className={`${styles.container_buttons}`}>
+						<Button handleClick={showModal}>Adicionar</Button>
+						<Button handleClick={() => console.log("Filtro")} icon="filter">
+							Filtrar
+						</Button>
+					</div>
+				</HeaderSection>
 
-			<ContainerUI variant="books">
-				{books.map((book) => (
-					<Book
-						key={book.id}
-						name={book.name}
-						category={book.category}
-						status={book.status}
-						startDate={book.startDate}
-						endDate={book.endDate}
-						favorite={book.favorite}
-						totalPages={book.totalPages}
-						currentPages={book.currentPages}
-					/>
-				))}
-			</ContainerUI>
-		</section>
+				<ContainerUI variant="books">
+					{books.map((book) => (
+						<Book
+							key={book.id}
+							name={book.name}
+							category={book.category}
+							status={book.status}
+							startDate={book.startDate}
+							endDate={book.endDate}
+							favorite={book.favorite}
+							totalPages={book.totalPages}
+							currentPages={book.currentPages}
+						/>
+					))}
+				</ContainerUI>
+			</section>
+
+			{modal && <Modal close={CloseModal}>a</Modal>}
+		</>
 	);
 };

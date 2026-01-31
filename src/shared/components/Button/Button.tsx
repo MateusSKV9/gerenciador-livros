@@ -16,12 +16,13 @@ type IconName = keyof typeof ICONS;
 
 type ButtonProps = {
 	children: ReactNode;
+	handleClick: () => void;
 	icon?: IconName;
 };
 
-export const Button = ({ children, icon }: ButtonProps) => {
+export const Button = ({ children, handleClick, icon }: ButtonProps) => {
 	return (
-		<button className={`${styles.button} button_behavior`} type="button">
+		<button onClick={handleClick} className={`${styles.button} button_behavior`} type="button">
 			{icon && ICONS[icon]}
 			{children}
 		</button>
