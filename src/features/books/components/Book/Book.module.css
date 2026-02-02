@@ -12,6 +12,7 @@
 }
 
 .header {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -39,6 +40,7 @@
 
 .name {
 	font-size: 1.3rem;
+	filter: drop-shadow(1px 2px 0px rgb(220, 220, 220));
 }
 
 .favorite_button {
@@ -60,7 +62,7 @@
 .wrapper_col {
 	display: flex;
 	flex-direction: column;
-	gap: 6px;
+	gap: 8px;
 }
 
 .container_flags {
