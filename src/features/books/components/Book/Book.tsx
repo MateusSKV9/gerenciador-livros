@@ -4,6 +4,7 @@ import { BookButton } from "../BookButton/BookButton";
 import styles from "./Book.module.css";
 import { format, parseISO } from "date-fns";
 import { type BookStatus } from "../../../../utils/book.types";
+import { ItemMenu } from "../../../../shared/components/ItemMenu/ItemMenu";
 
 type BookProps = {
 	name: string;
@@ -19,11 +20,13 @@ type BookProps = {
 export const Book = ({ name, category, status, startDate, endDate, totalPages, currentPages, favorite }: BookProps) => {
 	const [pagesRead, setPagesRead] = useState(currentPages);
 	const [favorited, setFavorited] = useState(favorite);
-
+	const [bookMenu, setBookMenu] = useState(false);
 	const [currentStatus, setCurrentStatus] = useState(status);
 
 	const percentage = (pagesRead / totalPages) * 100;
 	const currentProgress = Math.min(100, Math.max(0, Math.floor(percentage)));
+
+	const handleToggleBookMenu = () => setBookMenu((prev) => !prev);
 
 	const handleIncrease = () => {
 		setPagesRead((prev) => prev + 1);
@@ -76,7 +79,7 @@ export const Book = ({ name, category, status, startDate, endDate, totalPages, c
 							/>
 						</svg>
 					</button>
-					<button className={styles.button} type="button" title="menu">
+					<button onClick={handleToggleBookMenu} className={styles.button} type="button" title="menu">
 						<svg width={30} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
 							<path
 								fill="currentColor"
@@ -84,6 +87,7 @@ export const Book = ({ name, category, status, startDate, endDate, totalPages, c
 							/>
 						</svg>
 					</button>
+					{bookMenu && <ItemMenu handleEdit={() => alert()} handleDelete={() => alert()} variant="book" />}
 				</div>
 
 				<div className={styles.wrapper_col}>

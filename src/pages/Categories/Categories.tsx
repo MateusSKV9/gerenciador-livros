@@ -12,6 +12,7 @@ const initialCategories = [
 ];
 
 export const Categories = () => {
+	const [categories] = useState(initialCategories);
 	const { showModal } = UseModal();
 
 	return (

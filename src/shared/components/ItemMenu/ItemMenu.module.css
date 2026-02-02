@@ -1,0 +1,33 @@
+.list {
+	position: absolute;
+	right: -14px;
+	z-index: 98;
+	padding: 8px;
+	border-radius: 4px;
+
+	background-color: var(--white);
+	box-shadow: 0px 4px 0px 1px rgba(0, 0, 0, 0.12);
+	border: 1px solid var(--black);
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.item {
+	display: flex;
+}
+
+.button {
+	width: 100%;
+	padding: 4px;
+	font-size: 1.1rem;
+}
+
+.book {
+	top: 30px;
+}
+
+.category {
+	top: 36px;
+}

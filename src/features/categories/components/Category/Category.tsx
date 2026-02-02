@@ -9,11 +9,13 @@ type CategoryProps = {
 export const Category = ({ name }: CategoryProps) => {
 	const [categoryMenu, setCategoryMenu] = useState(false);
 
+	const handleToggleCategoyMenu = () => setCategoryMenu((prev) => !prev);
 
 	return (
 		<article className={styles.card}>
 			<h2 className={styles.name}>{name}</h2>
 
+			<button onClick={handleToggleCategoyMenu} className={styles.button} type="button" title="menu">
 				<svg width={28} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
 					<path
 						fill="currentColor"
@@ -22,6 +24,7 @@ export const Category = ({ name }: CategoryProps) => {
 				</svg>
 			</button>
 
+			{categoryMenu && <ItemMenu handleEdit={() => alert()} handleDelete={() => alert()} variant="category" />}
 		</article>
 	);
 };
