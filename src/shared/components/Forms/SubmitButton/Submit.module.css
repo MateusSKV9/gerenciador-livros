@@ -1,0 +1,11 @@
+.submit {
+	box-shadow: 0px 3px 0px var(--black);
+	border: 1px solid var(--black);
+	padding: 8px;
+	text-align: center;
+	background-color: var(--blue);
+	color: var(--white);
+	font-weight: bold;
+	border-radius: 4px;
+	font-size: 1rem;
+}

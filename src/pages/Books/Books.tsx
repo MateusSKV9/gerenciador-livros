@@ -5,8 +5,8 @@ import { ContainerUI } from "../../shared/components/ContainerUI/ContainerUI";
 import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSection";
 import { Button } from "../../shared/components/Button/Button";
 import type { BookStatus } from "../../utils/book.types";
-import { Modal } from "../../shared/components/Modal/Modal";
 import { UseModal } from "../../hooks/UseModal";
+import { BookModal } from "../../features/books/components/BookModal/BookModal";
 
 type BookType = {
 	id: number;
@@ -100,7 +100,7 @@ export const Books = () => {
 				</ContainerUI>
 			</section>
 
-			{modal && <Modal close={CloseModal}>a</Modal>}
+			{modal && <BookModal close={CloseModal}></BookModal>}
 		</>
 	);
 };

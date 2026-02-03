@@ -1,0 +1,13 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.body {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	border-bottom: 1px solid black;
+	padding-bottom: 16px;
+}
