@@ -92,9 +92,7 @@ export const Book = ({ name, category, status, startDate, endDate, totalPages, c
 
 				<div className={styles.wrapper_col}>
 					<h2 className={styles.name}>{name}</h2>
-
-					<Flag text={category} />
-					<Flag text={currentStatus} variant={currentStatus} />
+					{category && <Flag text={category} />} <Flag text={currentStatus} variant={currentStatus} />
 				</div>
 			</header>
 

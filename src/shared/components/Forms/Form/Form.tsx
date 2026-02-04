@@ -4,11 +4,12 @@ import type { ReactNode } from "react";
 
 type FormProps = {
 	children: ReactNode;
+	onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export const Form = ({ children }: FormProps) => {
+export const Form = ({ children, onSubmit }: FormProps) => {
 	return (
-		<form className={styles.form}>
+		<form onSubmit={onSubmit} className={styles.form}>
 			<div className={styles.body}>{children}</div>
 			<SubmitButton text="Enviar" />
 		</form>
