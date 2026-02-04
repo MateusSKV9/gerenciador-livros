@@ -1,7 +1,7 @@
 import type { BookStatus } from "../utils/book.types";
 
 export type BookType = {
-	id: number;
+	id: string;
 	name: string;
 	totalPages: number;
 	currentPages: number;
