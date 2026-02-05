@@ -36,6 +36,7 @@ export const Books = () => {
 							favorite={book.favorite}
 							totalPages={book.totalPages}
 							currentPages={book.currentPages}
+              showModal={showModal}
 						/>
 					))}
 				</ContainerUI>

@@ -3,18 +3,33 @@ import { Form } from "../../../../shared/components/Forms/Form/Form";
 import { Input } from "../../../../shared/components/Forms/Input/Input";
 import { Select } from "../../../../shared/components/Forms/Select/Select";
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { BookType } from "../../../../types/book";
 import { UseBook } from "../../../../hooks/UseBooks";
 
-export const BookForm = () => {
-	const [book, setBook] = useState<Partial<BookType>>({});
-	const { create } = UseBook();
+type BookFormProps = {
+	close: () => void;
+	bookData: BookType | undefined;
+};
+
+export const BookForm = ({ close, bookData }: BookFormProps) => {
+	const [book, setBook] = useState<Partial<BookType>>(bookData || {});
+	const { create, update } = UseBook();
+
+	useEffect(() => {
+		if (bookData) {
+			setBook(bookData);
+		}
+	}, [bookData]);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		create({ id: crypto.randomUUID(), currentPages: 0, favorite: false, status: "to_read", ...book } as BookType);
-		console.log("criado");
+		if (book.id) {
+			update(book.id, { ...book });
+		} else {
+			create({ id: crypto.randomUUID(), currentPages: 0, favorite: false, status: "to_read", ...book } as BookType);
+		}
+		close();
 	};
 
 	const handleOnChange = (name: keyof BookType, value: string | number) => {

@@ -59,6 +59,10 @@ export const BookProvider = ({ children }: BookProviderProps) => {
 		return stored ? JSON.parse(stored) : initialBooks;
 	});
 
+	const getBook = (id: string) => {
+		return books.find((book) => book.id === id);
+	};
+
 	const create = (book: BookType) => {
 		setBooks((prev) => [...prev, book]);
 	};
@@ -67,14 +71,24 @@ export const BookProvider = ({ children }: BookProviderProps) => {
 		setBooks((prev) => prev.map((book) => (book.id === id ? { ...book, ...data } : book)));
 	};
 
+	const deleteBook = (id: string) => {
+		setBooks((prev) => prev.filter((book) => book.id !== id));
+	};
+
 	useEffect(() => {
-		localStorage.setItem("books", JSON.stringify(books));
+		const timeOut = setTimeout(() => {
+			localStorage.setItem("books", JSON.stringify(books));
+		}, 300);
+
+		return () => clearTimeout(timeOut);
 	}, [books]);
 
 	const value = {
 		books,
+		getBook,
 		create,
 		update,
+		deleteBook,
 	};
 
 	return <BookContext.Provider value={value}>{children}</BookContext.Provider>;

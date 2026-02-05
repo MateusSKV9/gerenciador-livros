@@ -6,6 +6,7 @@ import { format, parseISO } from "date-fns";
 import { type BookStatus } from "../../../../utils/book.types";
 import { ItemMenu } from "../../../../shared/components/ItemMenu/ItemMenu";
 import { UseBook } from "../../../../hooks/UseBooks";
+import { useSearchParams } from "react-router";
 
 type BookProps = {
 	id: string;
@@ -17,12 +18,14 @@ type BookProps = {
 	favorite: boolean;
 	startDate: string;
 	endDate: string;
+	showModal: () => void;
 };
 
 export const Book = React.memo(
-	({ id, name, category, status, startDate, endDate, totalPages, currentPages, favorite }: BookProps) => {
+	({ id, name, category, status, startDate, endDate, totalPages, currentPages, favorite, showModal }: BookProps) => {
 		const [bookMenu, setBookMenu] = useState(false);
-		const { update } = UseBook();
+		const { update, deleteBook } = UseBook();
+		const [, setSearchParams] = useSearchParams();
 
 		const percentage = (currentPages / totalPages) * 100;
 		const currentProgress = Math.min(100, Math.max(0, Math.floor(percentage)));
@@ -58,6 +61,11 @@ export const Book = React.memo(
 			update(id, { favorite: !favorite });
 		};
 
+		const handleEdit = () => {
+			setSearchParams(`id=${id}`);
+			showModal();
+		};
+
 		const displayDate = (date: string) => (date ? format(parseISO(date), "dd/MM/yyyy") : "--/--/----");
 
 		return (
@@ -90,7 +98,7 @@ export const Book = React.memo(
 								/>
 							</svg>
 						</button>
-						{bookMenu && <ItemMenu handleEdit={() => alert()} handleDelete={() => alert()} variant="book" />}
+						{bookMenu && <ItemMenu handleEdit={handleEdit} handleDelete={() => deleteBook(id)} variant="book" />}
 					</div>
 
 					<div className={styles.wrapper_col}>
@@ -102,7 +110,7 @@ export const Book = React.memo(
 
 				<div className={styles.body}>
 					<BookButton handleClick={handleClick} styleType={status} icon={status}>
-						{`${status === "to_read" ? "Iniciar" : status === "reading" ? "Finaliar" : "Reiniciar"}  Leitura`}
+						{`${status === "to_read" ? "Iniciar" : status === "reading" ? "Finalizar" : "Reiniciar"}  Leitura`}
 					</BookButton>
 
 					<div className={styles.container_dates}>
