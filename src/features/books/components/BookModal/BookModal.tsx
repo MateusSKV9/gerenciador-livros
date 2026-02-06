@@ -1,9 +1,7 @@
 import { useSearchParams } from "react-router";
 import { Modal } from "../../../../shared/components/Modal/Modal";
 import { BookForm } from "../BookForm/BookForm";
-import { UseBook } from "../../../../hooks/UseBooks";
-import { useEffect, useState } from "react";
-import type { BookType } from "../../../../types/book";
+import { useBook } from "../../../../hooks/useBook";
 
 type BookModalProps = {
 	close: () => void;
@@ -11,20 +9,13 @@ type BookModalProps = {
 
 export const BookModal = ({ close }: BookModalProps) => {
 	const [searchParams] = useSearchParams();
-	const { getBook } = UseBook();
+	const { getBook } = useBook();
 	const id = searchParams.get("id") || undefined;
-	const [bookData, setBookData] = useState<BookType | undefined>();
-
-	useEffect(() => {
-		if (id) {
-			const data = getBook(id);
-			setBookData(data);
-		}
-	}, [id, getBook]);
+	const bookData = id ? getBook(id) : undefined;
 
 	return (
 		<Modal close={close}>
-			<BookForm key={id || "new"} bookData={bookData} close={close} />
+			{id && !bookData ? <h2>carregando...</h2> : <BookForm key={id || "new"} bookData={bookData} close={close} />}
 		</Modal>
 	);
 };

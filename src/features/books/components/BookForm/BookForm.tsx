@@ -3,9 +3,10 @@ import { Form } from "../../../../shared/components/Forms/Form/Form";
 import { Input } from "../../../../shared/components/Forms/Input/Input";
 import { Select } from "../../../../shared/components/Forms/Select/Select";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { BookType } from "../../../../types/book";
-import { UseBook } from "../../../../hooks/UseBooks";
+import { useBook } from "../../../../hooks/useBook";
+import { useCategory } from "../../../../hooks/useCategory";
 
 type BookFormProps = {
 	close: () => void;
@@ -14,20 +15,21 @@ type BookFormProps = {
 
 export const BookForm = ({ close, bookData }: BookFormProps) => {
 	const [book, setBook] = useState<Partial<BookType>>(bookData || {});
-	const { create, update } = UseBook();
+	const { categories } = useCategory();
+	const { createBook, updateBook } = useBook();
 
-	useEffect(() => {
-		if (bookData) {
-			setBook(bookData);
-		}
-	}, [bookData]);
+	// useEffect(() => {
+	// 	if (bookData) {
+	// 		setBook(bookData);
+	// 	}
+	// }, [bookData]);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (book.id) {
-			update(book.id, { ...book });
+			updateBook(book.id, { ...book });
 		} else {
-			create({ id: crypto.randomUUID(), currentPages: 0, favorite: false, status: "to_read", ...book } as BookType);
+			createBook({ id: crypto.randomUUID(), currentPages: 0, favorite: false, status: "to_read", ...book } as BookType);
 		}
 		close();
 	};
@@ -60,6 +62,7 @@ export const BookForm = ({ close, bookData }: BookFormProps) => {
 				<Select
 					id="category"
 					onChange={handleOnChange}
+					options={categories}
 					value={book.category ? book.category : ""}
 					label="Categoria"
 					name="category"

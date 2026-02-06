@@ -3,13 +3,13 @@ import { Book } from "../../features/books/components/Book/Book";
 import { ContainerUI } from "../../shared/components/ContainerUI/ContainerUI";
 import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSection";
 import { Button } from "../../shared/components/Button/Button";
-import { UseModal } from "../../hooks/UseModal";
+import { useModal } from "../../hooks/useModal";
 import { BookModal } from "../../features/books/components/BookModal/BookModal";
-import { UseBook } from "../../hooks/UseBooks";
+import { useBook } from "../../hooks/useBook";
 
 export const Books = () => {
-	const { books } = UseBook();
-	const { modal, showModal, CloseModal } = UseModal();
+	const { books } = useBook();
+	const { modal, showModal, CloseModal } = useModal();
 
 	return (
 		<>
@@ -36,7 +36,7 @@ export const Books = () => {
 							favorite={book.favorite}
 							totalPages={book.totalPages}
 							currentPages={book.currentPages}
-              showModal={showModal}
+							showModal={showModal}
 						/>
 					))}
 				</ContainerUI>

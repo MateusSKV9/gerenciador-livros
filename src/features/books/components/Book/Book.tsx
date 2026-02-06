@@ -5,8 +5,9 @@ import styles from "./Book.module.css";
 import { format, parseISO } from "date-fns";
 import { type BookStatus } from "../../../../utils/book.types";
 import { ItemMenu } from "../../../../shared/components/ItemMenu/ItemMenu";
-import { UseBook } from "../../../../hooks/UseBooks";
+import { useBook } from "../../../../hooks/useBook";
 import { useSearchParams } from "react-router";
+import { useCategory } from "../../../../hooks/useCategory";
 
 type BookProps = {
 	id: string;
@@ -23,9 +24,12 @@ type BookProps = {
 
 export const Book = React.memo(
 	({ id, name, category, status, startDate, endDate, totalPages, currentPages, favorite, showModal }: BookProps) => {
+		const { getCategory } = useCategory();
 		const [bookMenu, setBookMenu] = useState(false);
-		const { update, deleteBook } = UseBook();
+		const { updateBook, deleteBook } = useBook();
 		const [, setSearchParams] = useSearchParams();
+
+		const bookCategory = getCategory(category);
 
 		const percentage = (currentPages / totalPages) * 100;
 		const currentProgress = Math.min(100, Math.max(0, Math.floor(percentage)));
@@ -34,31 +38,31 @@ export const Book = React.memo(
 
 		const handleIncrease = () => {
 			const nextPage = Math.min(currentPages + 1, totalPages);
-			update(id, { currentPages: nextPage, status: nextPage === totalPages ? "completed" : "reading" });
+			updateBook(id, { currentPages: nextPage, status: nextPage === totalPages ? "completed" : "reading" });
 		};
 
 		const handleDecrease = () => {
 			const nextPage = Math.max(currentPages - 1, 0);
-			update(id, { currentPages: nextPage, status: nextPage === 0 ? "to_read" : "reading" });
+			updateBook(id, { currentPages: nextPage, status: nextPage === 0 ? "to_read" : "reading" });
 		};
 
 		const handleClick = () => {
 			if (status === "to_read") {
-				update(id, { status: "reading", currentPages: 0 });
+				updateBook(id, { status: "reading", currentPages: 0 });
 				return;
 			}
 
 			if (status === "reading") {
-				update(id, { status: "completed", currentPages: totalPages });
+				updateBook(id, { status: "completed", currentPages: totalPages });
 
 				return;
 			}
 
-			update(id, { status: "to_read", currentPages: 0 });
+			updateBook(id, { status: "to_read", currentPages: 0 });
 		};
 
 		const handleFavorite = () => {
-			update(id, { favorite: !favorite });
+			updateBook(id, { favorite: !favorite });
 		};
 
 		const handleEdit = () => {
@@ -103,7 +107,7 @@ export const Book = React.memo(
 
 					<div className={styles.wrapper_col}>
 						<h2 className={styles.name}>{name}</h2>
-						{category && <Flag text={category} />}
+						{category && <Flag text={bookCategory!.name} />}
 						<Flag text={status} variant={status} />
 					</div>
 				</header>
