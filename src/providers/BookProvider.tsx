@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type { BookType } from "../types/book";
-import { BookContext } from "../hooks/UseBooks";
+import { BookContext } from "../hooks/useBook";
 
 const initialBooks: BookType[] = [
 	{
@@ -8,7 +8,7 @@ const initialBooks: BookType[] = [
 		name: "Cartas de um diabo a seu aprendiz",
 		totalPages: 206,
 		currentPages: 0,
-		category: "Cristão",
+		category: "2",
 		status: "to_read",
 		favorite: false,
 		startDate: "2026-01-27",
@@ -19,7 +19,7 @@ const initialBooks: BookType[] = [
 		name: "Bíblia",
 		totalPages: 1363,
 		currentPages: 0,
-		category: "Bíblia",
+		category: "1",
 		status: "to_read",
 		favorite: true,
 		startDate: "2026-01-27",
@@ -30,7 +30,7 @@ const initialBooks: BookType[] = [
 		name: "A Pirâmide da Sabedoria",
 		totalPages: 203,
 		currentPages: 0,
-		category: "Cristão",
+		category: "2",
 		status: "to_read",
 		favorite: true,
 		startDate: "2026-01-27",
@@ -41,7 +41,7 @@ const initialBooks: BookType[] = [
 		name: "Princípios Elementares",
 		totalPages: 10,
 		currentPages: 0,
-		category: "Cristão",
+		category: "2",
 		status: "to_read",
 		favorite: true,
 		startDate: "2026-01-27",
@@ -63,11 +63,11 @@ export const BookProvider = ({ children }: BookProviderProps) => {
 		return books.find((book) => book.id === id);
 	};
 
-	const create = (book: BookType) => {
+	const createBook = (book: BookType) => {
 		setBooks((prev) => [...prev, book]);
 	};
 
-	const update = (id: string, data: Partial<BookType>) => {
+	const updateBook = (id: string, data: Partial<BookType>) => {
 		setBooks((prev) => prev.map((book) => (book.id === id ? { ...book, ...data } : book)));
 	};
 
@@ -86,8 +86,8 @@ export const BookProvider = ({ children }: BookProviderProps) => {
 	const value = {
 		books,
 		getBook,
-		create,
-		update,
+		createBook,
+		updateBook,
 		deleteBook,
 	};
 

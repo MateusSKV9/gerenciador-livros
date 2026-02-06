@@ -1,19 +1,14 @@
-import { useState } from "react";
-import { UseModal } from "../../hooks/UseModal";
+import { useModal } from "../../hooks/useModal";
 import { Button } from "../../shared/components/Button/Button";
 import { ContainerUI } from "../../shared/components/ContainerUI/ContainerUI";
 import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSection";
 import styles from "./Categories.module.css";
 import { Category } from "../../features/categories/components/Category/Category";
-
-const initialCategories = [
-	{ id: 1, name: "Cristão" },
-	{ id: 2, name: "Bíblia" },
-];
+import { useCategory } from "../../hooks/useCategory";
 
 export const Categories = () => {
-	const [categories] = useState(initialCategories);
-	const { showModal } = UseModal();
+	const { categories } = useCategory();
+	const { showModal } = useModal();
 
 	return (
 		<section className={styles.section}>

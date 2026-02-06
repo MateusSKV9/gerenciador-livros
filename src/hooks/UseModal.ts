@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router";
 
-export const UseModal = () => {
+export const useModal = () => {
 	const [modal, setModal] = useState(false);
 	const [, setSearchParams] = useSearchParams();
 
