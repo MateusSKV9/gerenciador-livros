@@ -1,4 +1,5 @@
 import type { BookType } from "../../../../types/book";
+import type { CategoryType } from "../../../../utils/category";
 import styles from "./Select.module.css";
 import type { ReactNode } from "react";
 
@@ -8,9 +9,11 @@ type SelectProps = {
 	label: string;
 	children: ReactNode;
 	value: string | number;
+	options: CategoryType[];
 	onChange: (name: keyof BookType, value: string | number) => void;
 };
-export const Select = ({ id, name, label, value, children, onChange }: SelectProps) => {
+
+export const Select = ({ id, name, label, value, options, onChange }: SelectProps) => {
 	return (
 		<div className={styles.form_controll}>
 			<label className={styles.label} htmlFor={id}>
@@ -24,7 +27,11 @@ export const Select = ({ id, name, label, value, children, onChange }: SelectPro
 				id={id}
 			>
 				<option value="">Selecione uma categoria</option>
-				{children}
+				{options.map((option: CategoryType) => (
+					<option key={option.id} value={option.id}>
+						{option.name}
+					</option>
+				))}
 			</select>
 		</div>
 	);
