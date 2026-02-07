@@ -22,6 +22,11 @@
 	}
 }
 
+.title {
+	font-size: 1.6rem;
+	font-weight: bold;
+}
+
 .wrapper {
 	display: flex;
 	justify-content: center;

@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { CategoryContext } from "../hooks/useCategory";
 import type { CategoryType } from "../utils/category";
 
@@ -17,27 +17,39 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
 		return stored ? JSON.parse(stored) : initialCategories;
 	});
 
-	const createCategory = (category: CategoryType) => {
+	const getCategory = useCallback(
+		(id: string) => {
+			return categories.find((cat) => cat.id === id);
+		},
+		[categories]
+	);
+
+	const createCategory = useCallback((category: CategoryType) => {
 		setCategories((prev) => [...prev, category]);
-	};
+	}, []);
 
-	const getCategory = (id: string) => {
-		return categories.find((Category) => Category.id === id);
-	};
-
-	const updateCategory = (id: string, data: Partial<CategoryType>) => {
+	const updateCategory = useCallback((id: string, data: Partial<CategoryType>) => {
 		setCategories((prev) => prev.map((category) => (category.id === id ? { ...category, ...data } : category)));
-	};
+	}, []);
 
-	const deleteCategory = (id: string) => {
+	const deleteCategory = useCallback((id: string) => {
 		setCategories((prev) => prev.filter((category) => category.id !== id));
-	};
+	}, []);
 
 	useEffect(() => {
 		localStorage.setItem("categories", JSON.stringify(categories));
 	}, [categories]);
 
-	const value = { categories, createCategory, getCategory, updateCategory, deleteCategory };
+	const value = useMemo(
+		() => ({
+			categories,
+			getCategory,
+			createCategory,
+			updateCategory,
+			deleteCategory,
+		}),
+		[categories, getCategory, createCategory, updateCategory, deleteCategory]
+	);
 
 	return <CategoryContext.Provider value={value}>{children}</CategoryContext.Provider>;
 };

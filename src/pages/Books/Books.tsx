@@ -5,11 +5,11 @@ import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSecti
 import { Button } from "../../shared/components/Button/Button";
 import { useModal } from "../../hooks/useModal";
 import { BookModal } from "../../features/books/components/BookModal/BookModal";
-import { useBook } from "../../hooks/useBook";
+import { useBooks } from "../../hooks/useBook";
 
 export const Books = () => {
-	const { books } = useBook();
-	const { modal, showModal, CloseModal } = useModal();
+	const { books } = useBooks();
+	const { modal, showModal, closeModal } = useModal();
 
 	return (
 		<>
@@ -42,7 +42,7 @@ export const Books = () => {
 				</ContainerUI>
 			</section>
 
-			{modal && <BookModal close={CloseModal}></BookModal>}
+			{modal && <BookModal close={closeModal}></BookModal>}
 		</>
 	);
 };

@@ -1,6 +1,6 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { BookType } from "../types/book";
-import { BookContext } from "../hooks/useBook";
+import { BooksContext, BookActionsContext } from "../hooks/useBook";
 
 const initialBooks: BookType[] = [
 	{
@@ -59,21 +59,19 @@ export const BookProvider = ({ children }: BookProviderProps) => {
 		return stored ? JSON.parse(stored) : initialBooks;
 	});
 
-	const getBook = (id: string) => {
-		return books.find((book) => book.id === id);
-	};
+	const getBook = useCallback((id: string) => books.find((book) => book.id === id), [books]);
 
-	const createBook = (book: BookType) => {
+	const createBook = useCallback((book: BookType) => {
 		setBooks((prev) => [...prev, book]);
-	};
+	}, []);
 
-	const updateBook = (id: string, data: Partial<BookType>) => {
+	const updateBook = useCallback((id: string, data: Partial<BookType>) => {
 		setBooks((prev) => prev.map((book) => (book.id === id ? { ...book, ...data } : book)));
-	};
+	}, []);
 
-	const deleteBook = (id: string) => {
+	const deleteBook = useCallback((id: string) => {
 		setBooks((prev) => prev.filter((book) => book.id !== id));
-	};
+	}, []);
 
 	useEffect(() => {
 		const timeOut = setTimeout(() => {
@@ -83,13 +81,13 @@ export const BookProvider = ({ children }: BookProviderProps) => {
 		return () => clearTimeout(timeOut);
 	}, [books]);
 
-	const value = {
-		books,
-		getBook,
-		createBook,
-		updateBook,
-		deleteBook,
-	};
+	const stateValue = useMemo(() => ({ books, createBook, getBook }), [books, createBook, getBook]);
 
-	return <BookContext.Provider value={value}>{children}</BookContext.Provider>;
+	const actionsValue = useMemo(() => ({ updateBook, deleteBook }), [updateBook, deleteBook]);
+
+	return (
+		<BooksContext.Provider value={stateValue}>
+			<BookActionsContext.Provider value={actionsValue}>{children}</BookActionsContext.Provider>
+		</BooksContext.Provider>
+	);
 };

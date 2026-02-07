@@ -5,7 +5,7 @@ import { Select } from "../../../../shared/components/Forms/Select/Select";
 import type React from "react";
 import { useState } from "react";
 import type { BookType } from "../../../../types/book";
-import { useBook } from "../../../../hooks/useBook";
+import { useActionsBook, useBooks } from "../../../../hooks/useBook";
 import { useCategory } from "../../../../hooks/useCategory";
 
 type BookFormProps = {
@@ -16,7 +16,8 @@ type BookFormProps = {
 export const BookForm = ({ close, bookData }: BookFormProps) => {
 	const [book, setBook] = useState<Partial<BookType>>(bookData || {});
 	const { categories } = useCategory();
-	const { createBook, updateBook } = useBook();
+	const { createBook } = useBooks();
+	const { updateBook } = useActionsBook();
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

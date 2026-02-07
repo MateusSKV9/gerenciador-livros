@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router";
 import { Modal } from "../../../../shared/components/Modal/Modal";
 import { BookForm } from "../BookForm/BookForm";
-import { useBook } from "../../../../hooks/useBook";
+import { useBooks } from "../../../../hooks/useBook";
 
 type BookModalProps = {
 	close: () => void;
@@ -9,7 +9,7 @@ type BookModalProps = {
 
 export const BookModal = ({ close }: BookModalProps) => {
 	const [searchParams] = useSearchParams();
-	const { getBook } = useBook();
+	const { getBook } = useBooks();
 	const id = searchParams.get("id") || undefined;
 	const bookData = id ? getBook(id) : undefined;
 

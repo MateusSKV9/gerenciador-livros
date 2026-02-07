@@ -5,7 +5,7 @@ import styles from "./Book.module.css";
 import { format, parseISO } from "date-fns";
 import { type BookStatus } from "../../../../utils/book.types";
 import { ItemMenu } from "../../../../shared/components/ItemMenu/ItemMenu";
-import { useBook } from "../../../../hooks/useBook";
+import { useActionsBook } from "../../../../hooks/useBook";
 import { useSearchParams } from "react-router";
 import { useCategory } from "../../../../hooks/useCategory";
 
@@ -26,9 +26,9 @@ export const Book = React.memo(
 	({ id, name, category, status, startDate, endDate, totalPages, currentPages, favorite, showModal }: BookProps) => {
 		const { getCategory } = useCategory();
 		const [bookMenu, setBookMenu] = useState(false);
-		const { updateBook, deleteBook } = useBook();
-		const [, setSearchParams] = useSearchParams();
+		const { updateBook, deleteBook } = useActionsBook();
 
+		const [, setSearchParams] = useSearchParams();
 		const bookCategory = getCategory(category);
 
 		const percentage = (currentPages / totalPages) * 100;
@@ -54,7 +54,6 @@ export const Book = React.memo(
 
 			if (status === "reading") {
 				updateBook(id, { status: "completed", currentPages: totalPages });
-
 				return;
 			}
 
