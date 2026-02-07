@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Flag } from "../../../../shared/components/Flag/Flag";
 import { BookButton } from "../BookButton/BookButton";
 import styles from "./Book.module.css";
@@ -19,14 +19,32 @@ type BookProps = {
 	favorite: boolean;
 	startDate: string;
 	endDate: string;
+	bookMenu: boolean;
+	toggleMenuBook: (id: string) => void;
+	closeBookMenu: () => void;
 	showModal: () => void;
 };
 
 export const Book = React.memo(
-	({ id, name, category, status, startDate, endDate, totalPages, currentPages, favorite, showModal }: BookProps) => {
+	({
+		id,
+		name,
+		category,
+		status,
+		startDate,
+		endDate,
+		totalPages,
+		currentPages,
+		favorite,
+		bookMenu,
+		toggleMenuBook,
+		closeBookMenu,
+		showModal,
+	}: BookProps) => {
 		const { getCategory } = useCategory();
-		const [bookMenu, setBookMenu] = useState(false);
 		const { updateBook, deleteBook } = useActionsBook();
+
+		const menuRef = useRef<HTMLUListElement>(null);
 
 		const [, setSearchParams] = useSearchParams();
 		const bookCategory = getCategory(category);
@@ -34,7 +52,21 @@ export const Book = React.memo(
 		const percentage = (currentPages / totalPages) * 100;
 		const currentProgress = Math.min(100, Math.max(0, Math.floor(percentage)));
 
-		const handleToggleBookMenu = () => setBookMenu((prev) => !prev);
+		// const handleToggleBookMenu = () => setBookMenu((prev) => !prev);
+
+		useEffect(() => {
+			if (!bookMenu) return;
+
+			const clickOutside = (e: MouseEvent) => {
+				if (menuRef.current && bookMenu && !menuRef.current.contains(e.target as Node)) {
+					closeBookMenu();
+				}
+			};
+
+			document.addEventListener("click", clickOutside);
+
+			return () => document.removeEventListener("click", clickOutside);
+		}, [bookMenu, closeBookMenu]);
 
 		const handleIncrease = () => {
 			const nextPage = Math.min(currentPages + 1, totalPages);
@@ -66,6 +98,7 @@ export const Book = React.memo(
 
 		const handleEdit = () => {
 			setSearchParams(`id=${id}`);
+      closeBookMenu()
 			showModal();
 		};
 
@@ -93,7 +126,15 @@ export const Book = React.memo(
 								/>
 							</svg>
 						</button>
-						<button onClick={handleToggleBookMenu} className={styles.button} type="button" title="menu">
+						<button
+							onClick={(e) => {
+								e.stopPropagation();
+								toggleMenuBook(id);
+							}}
+							className={styles.button}
+							type="button"
+							title="menu"
+						>
 							<svg width={30} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
 								<path
 									fill="currentColor"
@@ -101,7 +142,9 @@ export const Book = React.memo(
 								/>
 							</svg>
 						</button>
-						{bookMenu && <ItemMenu handleEdit={handleEdit} handleDelete={() => deleteBook(id)} variant="book" />}
+						{bookMenu && (
+							<ItemMenu refMenu={menuRef} handleEdit={handleEdit} handleDelete={() => deleteBook(id)} variant="book" />
+						)}
 					</div>
 
 					<div className={styles.wrapper_col}>

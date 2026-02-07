@@ -6,10 +6,15 @@ import { Button } from "../../shared/components/Button/Button";
 import { useModal } from "../../hooks/useModal";
 import { BookModal } from "../../features/books/components/BookModal/BookModal";
 import { useBooks } from "../../hooks/useBook";
+import { useCallback, useState } from "react";
 
 export const Books = () => {
 	const { books } = useBooks();
 	const { modal, showModal, closeModal } = useModal();
+	const [bookMenu, setBookMenu] = useState<string | null>(null);
+
+	const toggleMenuBook = useCallback((id: string) => setBookMenu((prev) => (prev === id ? null : id)), []);
+	const closeBookMenu = useCallback(() => setBookMenu(null), []);
 
 	return (
 		<>
@@ -36,6 +41,9 @@ export const Books = () => {
 							favorite={book.favorite}
 							totalPages={book.totalPages}
 							currentPages={book.currentPages}
+							bookMenu={bookMenu === book.id}
+							toggleMenuBook={toggleMenuBook}
+							closeBookMenu={closeBookMenu}
 							showModal={showModal}
 						/>
 					))}

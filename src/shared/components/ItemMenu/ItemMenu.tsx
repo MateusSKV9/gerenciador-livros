@@ -4,6 +4,7 @@ type ItemMenuProps = {
 	handleEdit: () => void;
 	handleDelete: () => void;
 	variant: variantType;
+	refMenu: React.Ref<HTMLUListElement>;
 };
 
 const STYLE_VARIANT = {
@@ -13,9 +14,9 @@ const STYLE_VARIANT = {
 
 type variantType = keyof typeof STYLE_VARIANT;
 
-export const ItemMenu = ({ handleEdit, handleDelete, variant }: ItemMenuProps) => {
+export const ItemMenu = ({ handleEdit, handleDelete, variant, refMenu }: ItemMenuProps) => {
 	return (
-		<ul className={`${styles.list} ${STYLE_VARIANT[variant]}`}>
+		<ul ref={refMenu} className={`${styles.list} ${STYLE_VARIANT[variant]}`}>
 			<li className={styles.item}>
 				<button className={`${styles.button} button`} onClick={handleEdit} type="button">
 					Editar
