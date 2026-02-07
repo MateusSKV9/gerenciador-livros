@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./Category.module.css";
 import { ItemMenu } from "../../../../shared/components/ItemMenu/ItemMenu";
 import { useCategory } from "../../../../hooks/useCategory";
@@ -7,24 +7,37 @@ import { useSearchParams } from "react-router";
 type CategoryProps = {
 	id: string;
 	name: string;
+	categoryMenu: boolean;
+	toggleCategoyMenu: (id: string) => void;
+	closeMenu: () => void;
 	showModal: () => void;
-	close: () => void;
 };
 
-export const Category = ({ id, name, showModal, close }: CategoryProps) => {
-	const [categoryMenu, setCategoryMenu] = useState(false);
+export const Category = ({ id, name, categoryMenu, toggleCategoyMenu, closeMenu, showModal }: CategoryProps) => {
 	const { deleteCategory } = useCategory();
 	const [, setSearchParams] = useSearchParams();
 
-	const handleToggleCategoyMenu = () => setCategoryMenu((prev) => !prev);
+	const menuRef = useRef<HTMLUListElement>(null);
+
+	useEffect(() => {
+		const clickOutside = (e: MouseEvent) => {
+			if (menuRef.current && categoryMenu && !menuRef.current.contains(e.target as Node)) {
+				closeMenu();
+			}
+		};
+
+		document.addEventListener("click", clickOutside);
+
+		return () => document.removeEventListener("click", clickOutside);
+	}, [categoryMenu, closeMenu]);
 
 	const handleDelete = () => {
 		deleteCategory(id);
-		close();
 	};
 
 	const handleEdit = () => {
 		setSearchParams(`id=${id}`);
+		closeMenu();
 		showModal();
 	};
 
@@ -32,7 +45,15 @@ export const Category = ({ id, name, showModal, close }: CategoryProps) => {
 		<article className={styles.card}>
 			<h2 className={styles.name}>{name}</h2>
 
-			<button onClick={handleToggleCategoyMenu} className={styles.button} type="button" title="menu">
+			<button
+				onClick={(e) => {
+					e.stopPropagation();
+					toggleCategoyMenu(id);
+				}}
+				className={styles.button}
+				type="button"
+				title="menu"
+			>
 				<svg width={28} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
 					<path
 						fill="currentColor"
@@ -41,7 +62,9 @@ export const Category = ({ id, name, showModal, close }: CategoryProps) => {
 				</svg>
 			</button>
 
-			{categoryMenu && <ItemMenu handleEdit={handleEdit} handleDelete={handleDelete} variant="category" />}
+			{categoryMenu && (
+				<ItemMenu refMenu={menuRef} handleEdit={handleEdit} handleDelete={handleDelete} variant="category" />
+			)}
 		</article>
 	);
 };
