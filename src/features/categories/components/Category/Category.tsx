@@ -1,15 +1,32 @@
 import { useState } from "react";
 import styles from "./Category.module.css";
 import { ItemMenu } from "../../../../shared/components/ItemMenu/ItemMenu";
+import { useCategory } from "../../../../hooks/useCategory";
+import { useSearchParams } from "react-router";
 
 type CategoryProps = {
+	id: string;
 	name: string;
+	showModal: () => void;
+	close: () => void;
 };
 
-export const Category = ({ name }: CategoryProps) => {
+export const Category = ({ id, name, showModal, close }: CategoryProps) => {
 	const [categoryMenu, setCategoryMenu] = useState(false);
+	const { deleteCategory } = useCategory();
+	const [, setSearchParams] = useSearchParams();
 
 	const handleToggleCategoyMenu = () => setCategoryMenu((prev) => !prev);
+
+	const handleDelete = () => {
+		deleteCategory(id);
+		close();
+	};
+
+	const handleEdit = () => {
+		setSearchParams(`id=${id}`);
+		showModal();
+	};
 
 	return (
 		<article className={styles.card}>
@@ -24,7 +41,7 @@ export const Category = ({ name }: CategoryProps) => {
 				</svg>
 			</button>
 
-			{categoryMenu && <ItemMenu handleEdit={() => alert()} handleDelete={() => alert()} variant="category" />}
+			{categoryMenu && <ItemMenu handleEdit={handleEdit} handleDelete={handleDelete} variant="category" />}
 		</article>
 	);
 };

@@ -5,22 +5,32 @@ import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSecti
 import styles from "./Categories.module.css";
 import { Category } from "../../features/categories/components/Category/Category";
 import { useCategory } from "../../hooks/useCategory";
+import { CategoryModal } from "../../features/categories/components/CategoryModal/CategoryModal";
 
 export const Categories = () => {
 	const { categories } = useCategory();
-	const { showModal } = useModal();
+	const { modal, showModal, closeModal } = useModal();
 
 	return (
-		<section className={styles.section}>
-			<HeaderSection title="Categorias">
-				<Button handleClick={showModal}>Adicionar</Button>
-			</HeaderSection>
+		<>
+			<section className={styles.section}>
+				<HeaderSection title="Categorias">
+					<Button handleClick={showModal}>Adicionar</Button>
+				</HeaderSection>
 
-			<ContainerUI variant="categories">
-				{categories.map((category) => (
-					<Category key={category.id} name={category.name} />
-				))}
-			</ContainerUI>
-		</section>
+				<ContainerUI variant="categories">
+					{categories.map((category) => (
+						<Category
+							key={category.id}
+							id={category.id}
+							name={category.name}
+							showModal={showModal}
+							close={closeModal}
+						/>
+					))}
+				</ContainerUI>
+			</section>
+			{modal && <CategoryModal close={closeModal} />}
+		</>
 	);
 };

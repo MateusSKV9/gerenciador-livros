@@ -1,17 +1,16 @@
-import type { BookType } from "../../../../types/book";
 import styles from "./Input.module.css";
 
-type Props = {
+type InputProps<T> = {
 	id: string;
-	name: keyof BookType;
+	name: keyof T;
 	type: string;
 	label: string;
 	placeholder?: string;
 	value: string | number;
-	onChange: (name: keyof BookType, value: string | number) => void;
+	onChange: (name: keyof T, value: string | number) => void;
 };
 
-export const Input = ({ id, name, value, type, label, placeholder, onChange }: Props) => {
+export function Input<T>({ id, name, value, type, label, placeholder, onChange }: InputProps<T>) {
 	return (
 		<div className={styles.form_controll}>
 			<label className={styles.label} htmlFor={id}>
@@ -21,11 +20,11 @@ export const Input = ({ id, name, value, type, label, placeholder, onChange }: P
 				onChange={(e) => onChange(name, e.target.value)}
 				className={styles.input}
 				type={type}
-				name={name}
+				name={String(name)}
 				value={value}
 				id={id}
 				placeholder={placeholder}
 			/>
 		</div>
 	);
-};
+}

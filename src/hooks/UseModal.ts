@@ -6,10 +6,10 @@ export const useModal = () => {
 	const [, setSearchParams] = useSearchParams();
 
 	const showModal = () => setModal(true);
-	const CloseModal = () => {
+	const closeModal = () => {
 		setModal(false);
 		setSearchParams("");
 	};
 
-	return { modal, showModal, CloseModal };
+	return { modal, showModal, closeModal };
 };

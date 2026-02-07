@@ -18,12 +18,6 @@ export const BookForm = ({ close, bookData }: BookFormProps) => {
 	const { categories } = useCategory();
 	const { createBook, updateBook } = useBook();
 
-	// useEffect(() => {
-	// 	if (bookData) {
-	// 		setBook(bookData);
-	// 	}
-	// }, [bookData]);
-
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (book.id) {
@@ -40,7 +34,7 @@ export const BookForm = ({ close, bookData }: BookFormProps) => {
 
 	return (
 		<Form onSubmit={handleSubmit}>
-			<Input
+			<Input<BookType>
 				onChange={handleOnChange}
 				id="name"
 				name="name"

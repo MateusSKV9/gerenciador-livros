@@ -3,8 +3,8 @@ import type { CategoryType } from "../utils/category";
 
 type useCategoryProps = {
 	categories: CategoryType[];
-	getCategory: (id: string) => CategoryType | undefined;
 	createCategory: (category: CategoryType) => void;
+	getCategory: (id: string) => CategoryType | undefined;
 	updateCategory: (id: string, data: Partial<CategoryType>) => void;
 	deleteCategory: (id: string) => void;
 };
