@@ -1,4 +1,3 @@
-import { useModal } from "../../hooks/useModal";
 import { Button } from "../../shared/components/Button/Button";
 import { ContainerUI } from "../../shared/components/ContainerUI/ContainerUI";
 import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSection";
@@ -7,6 +6,7 @@ import { Category } from "../../features/categories/components/Category/Category
 import { useCategory } from "../../hooks/useCategory";
 import { CategoryModal } from "../../features/categories/components/CategoryModal/CategoryModal";
 import { useCallback, useState } from "react";
+import { useModal } from "../../hooks/useModal";
 
 export const Categories = () => {
 	const { categories } = useCategory();

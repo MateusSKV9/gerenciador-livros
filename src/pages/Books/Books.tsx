@@ -3,12 +3,13 @@ import { Book } from "../../features/books/components/Book/Book";
 import { ContainerUI } from "../../shared/components/ContainerUI/ContainerUI";
 import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSection";
 import { Button } from "../../shared/components/Button/Button";
-import { useModal } from "../../hooks/useModal";
+
 import { BookModal } from "../../features/books/components/BookModal/BookModal";
 import { useBooks } from "../../hooks/useBook";
 import { useCallback, useMemo, useState } from "react";
 import { useCategory } from "../../hooks/useCategory";
 import type { BookType } from "../../types/book";
+import { useModal } from "../../hooks/useModal";
 
 const FILTERS = {
 	favorites: { label: "Favoritos", compare: (book: BookType) => book.favorite },
