@@ -10,6 +10,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useCategory } from "../../hooks/useCategory";
 import type { BookType } from "../../types/book";
 import { useModal } from "../../hooks/useModal";
+import { useSearchParams } from "react-router";
 
 const FILTERS = {
 	favorites: { label: "Favoritos", compare: (book: BookType) => book.favorite },
@@ -26,21 +27,33 @@ export const Books = () => {
 	const { modal, showModal, closeModal } = useModal();
 	const [bookMenu, setBookMenu] = useState<string | null>(null);
 
-	const [filterSelected, setFilterSelected] = useState("all");
+	const [filterSelected, setFilterSelected] = useState("");
+
+	const [searchParams, setSearchParams] = useSearchParams({});
+	const search = searchParams.get("search");
 
 	const toggleMenuBook = useCallback((id: string) => setBookMenu((prev) => (prev === id ? null : id)), []);
 	const closeBookMenu = useCallback(() => setBookMenu(null), []);
 
 	const selectedBooks = useMemo(() => {
 		if (!books) return [];
-		if (filterSelected === "all") return books;
-		if (filterSelected in FILTERS) {
-			const filtred = FILTERS[filterSelected as SortersType];
-			return books.filter(filtred.compare);
+
+		let result = books;
+
+		if (search) {
+			result = result.filter((book) => book.name.toLowerCase().includes(search.toLowerCase()));
+		} else if (filterSelected && filterSelected !== "all") {
+			if (filterSelected in FILTERS) {
+				result = result.filter(FILTERS[filterSelected as SortersType].compare);
+			} else {
+				result = result.filter((book) => book.category === filterSelected);
+			}
 		}
 
-		return books.filter((book) => book.category === filterSelected);
-	}, [books, filterSelected]);
+		return [...result].sort((a, b) =>
+			a.status === "reading" && b.status !== "reading" ? -1 : b.status === "reading" && a.status !== "reading" ? 1 : 0
+		);
+	}, [books, filterSelected, search]);
 
 	return (
 		<>
@@ -52,12 +65,15 @@ export const Books = () => {
 						<select
 							className={`${styles.filter} button_behavior`}
 							value={filterSelected}
-							onChange={(e) => setFilterSelected(e.target.value)}
+							onChange={(e) => {
+								setSearchParams({});
+								setFilterSelected(e.target.value);
+							}}
 							name="filter"
 							id="filter"
 							title="Filtro"
 						>
-							<option value="" selected disabled>
+							<option value="" disabled>
 								🔍Filtrar
 							</option>
 							<option value="all">Todos</option>
