@@ -10,6 +10,8 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+
+	min-height: 70px;
 }
 
 .logo {
@@ -22,13 +24,13 @@
 	}
 }
 
-.title {
+.logo_text {
 	font-size: 1.6rem;
 	font-weight: bold;
 }
 
 .wrapper {
-	display: flex;
+	display: none;
 	justify-content: center;
 	align-items: center;
 	gap: 16px;
@@ -94,4 +96,71 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.showMenu {
+	display: flex;
+}
+
+.btnMenu {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	right: 20px;
+}
+
+@media screen and (min-width: 601px) {
+	.wrapper {
+		display: flex !important;
+	}
+
+	.btnMenu {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 890px) {
+	.header {
+		flex-direction: column;
+		gap: 12px;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.logo {
+		position: absolute;
+		left: 20px;
+	}
+
+	.logo_text {
+		display: none;
+	}
+
+	.wrapper {
+		width: 100%;
+		flex-direction: column;
+		margin-top: 50px;
+		text-align: center;
+
+		& > * {
+			width: 100%;
+		}
+	}
+
+	.list {
+		flex-direction: column;
+	}
+
+	.link {
+		width: 100%;
+	}
+
+	.icon_search {
+		display: none;
+	}
+
+	.input {
+		text-align: center;
+	}
 }

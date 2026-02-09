@@ -145,7 +145,7 @@ export const Book = React.memo(
 
 					<div className={styles.wrapper_col}>
 						<h2 className={styles.name}>{name}</h2>
-						{category && <Flag text={bookCategory!.name} />}
+						{bookCategory && <Flag text={bookCategory.name} />}
 						<Flag text={status} variant={status} />
 					</div>
 				</header>

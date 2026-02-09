@@ -16,4 +16,8 @@
 	outline: none;
 	height: 100%;
 	font-size: 0.9rem;
+
+	padding: 8px;
+
+	text-overflow: clip;
 }

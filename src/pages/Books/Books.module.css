@@ -24,3 +24,13 @@
 		}
 	}
 }
+
+@media screen and (max-width: 600px) {
+	.container_buttons {
+		width: 100%;
+
+		& > * {
+			flex-grow: 1;
+		}
+	}
+}

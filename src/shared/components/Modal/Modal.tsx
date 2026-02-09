@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import styles from "./Modal.module.css";
 import { createPortal } from "react-dom";
 
@@ -10,6 +10,14 @@ type ModalProps = {
 export const Modal = ({ children, close }: ModalProps) => {
 	const modal = document.querySelector("#root-modal");
 	const modalRef = useRef(null);
+
+	useEffect(() => {
+		document.body.style.overflow = "hidden";
+
+		return () => {
+			document.body.style.overflow = "auto";
+		};
+	}, []);
 
 	if (!modal) return null;
 

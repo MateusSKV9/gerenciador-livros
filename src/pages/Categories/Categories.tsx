@@ -25,7 +25,9 @@ export const Categories = () => {
 		<>
 			<section className={styles.section}>
 				<HeaderSection title="Categorias">
-					<Button handleClick={showModal}>Adicionar</Button>
+					<div className={styles.container_buttons}>
+						<Button handleClick={showModal}>Adicionar</Button>
+					</div>
 				</HeaderSection>
 
 				<ContainerUI variant="categories">

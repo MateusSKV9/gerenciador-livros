@@ -1,12 +1,29 @@
 import { Link, useSearchParams } from "react-router";
 import styles from "./Header.module.css";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../../../hooks/useTheme";
 
 export const Header = () => {
 	const { toggleTheme } = useTheme();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const search = searchParams.get("search") ?? "";
+	const [showMenu, setShowMenu] = useState(window.innerWidth <= 600);
+	const navRef = useRef<HTMLDivElement | null>(null);
+	const btnMenuRef = useRef<HTMLButtonElement | null>(null);
+
+	useEffect(() => {
+		const clickOutside = (e: MouseEvent) => {
+			const target = e.target as Node;
+
+			if (navRef.current && showMenu && !btnMenuRef.current?.contains(target) && !navRef.current.contains(target)) {
+				setShowMenu(false);
+			}
+		};
+
+		document.documentElement.addEventListener("click", clickOutside);
+
+		return () => document.removeEventListener("click", clickOutside);
+	}, [showMenu]);
 
 	useEffect(() => {
 		const time = setTimeout(() => {
@@ -15,6 +32,8 @@ export const Header = () => {
 
 		return () => clearTimeout(time);
 	}, [search, searchParams]);
+
+	const toggleMenu = () => setShowMenu((prev) => !prev);
 
 	return (
 		<header className={styles.header}>
@@ -25,10 +44,19 @@ export const Header = () => {
 						d="M320 205.3L320 514.6L320.5 514.4C375.1 491.7 433.7 480 492.8 480L512 480L512 160L492.8 160C450.6 160 408.7 168.4 369.7 184.6C352.9 191.6 336.3 198.5 320 205.3zM294.9 125.5L320 136L345.1 125.5C391.9 106 442.1 96 492.8 96L528 96C554.5 96 576 117.5 576 144L576 496C576 522.5 554.5 544 528 544L492.8 544C442.1 544 391.9 554 345.1 573.5L332.3 578.8C324.4 582.1 315.6 582.1 307.7 578.8L294.9 573.5C248.1 554 197.9 544 147.2 544L112 544C85.5 544 64 522.5 64 496L64 144C64 117.5 85.5 96 112 96L147.2 96C197.9 96 248.1 106 294.9 125.5z"
 					/>
 				</svg>
-				<span className={styles.title}>Gerenciador de Livros</span>
+				<span className={styles.logo_text}>Gerenciador de Livros</span>
 			</Link>
 
-			<div className={styles.wrapper}>
+			<button ref={btnMenuRef} onClick={toggleMenu} type="button" title="Menu" className={styles.btnMenu}>
+				<svg width={30} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+					<path
+						fill="currentColor"
+						d="M96 160C96 142.3 110.3 128 128 128L512 128C529.7 128 544 142.3 544 160C544 177.7 529.7 192 512 192L128 192C110.3 192 96 177.7 96 160zM96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320zM544 480C544 497.7 529.7 512 512 512L128 512C110.3 512 96 497.7 96 480C96 462.3 110.3 448 128 448L512 448C529.7 448 544 462.3 544 480z"
+					/>
+				</svg>
+			</button>
+
+			<div ref={navRef} className={`${styles.wrapper} ${showMenu ? styles.showMenu : ""}`}>
 				<nav className={styles.nav}>
 					<ul className={styles.list}>
 						<li className={styles.item}>
