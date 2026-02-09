@@ -9,6 +9,7 @@
 	align-items: center;
 	gap: 20px;
 	position: relative;
+	background-color: var(--white);
 }
 
 .button {

@@ -29,11 +29,24 @@ export const Books = () => {
 
 	const [filterSelected, setFilterSelected] = useState("");
 
-	const [searchParams, setSearchParams] = useSearchParams({});
+	const [searchParams, setSearchParams] = useSearchParams();
 	const search = searchParams.get("search");
 
 	const toggleMenuBook = useCallback((id: string) => setBookMenu((prev) => (prev === id ? null : id)), []);
 	const closeBookMenu = useCallback(() => setBookMenu(null), []);
+
+	const handleEditClick = useCallback(
+		(id: string) => {
+			setSearchParams((prev) => {
+				const newParams = new URLSearchParams(prev);
+				newParams.set("id", id);
+				return newParams;
+			});
+			showModal();
+			closeBookMenu();
+		},
+		[setSearchParams, showModal, closeBookMenu]
+	);
 
 	const selectedBooks = useMemo(() => {
 		if (!books) return [];
@@ -66,7 +79,7 @@ export const Books = () => {
 							className={`${styles.filter} button_behavior`}
 							value={filterSelected}
 							onChange={(e) => {
-								setSearchParams({});
+								setSearchParams({ search: "" });
 								setFilterSelected(e.target.value);
 							}}
 							name="filter"
@@ -111,6 +124,7 @@ export const Books = () => {
 								toggleMenuBook={toggleMenuBook}
 								closeBookMenu={closeBookMenu}
 								showModal={showModal}
+								handleEdit={handleEditClick}
 							/>
 						))
 					) : (

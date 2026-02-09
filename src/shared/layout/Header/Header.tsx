@@ -1,18 +1,20 @@
 import { Link, useSearchParams } from "react-router";
 import styles from "./Header.module.css";
 import { useEffect } from "react";
+import { useTheme } from "../../../hooks/useTheme";
 
 export const Header = () => {
+	const { toggleTheme } = useTheme();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const search = searchParams.get("search") ?? "";
 
 	useEffect(() => {
 		const time = setTimeout(() => {
-			setSearchParams(search ? { search } : {});
+			searchParams.set("search", search);
 		}, 200);
 
 		return () => clearTimeout(time);
-	}, [search, setSearchParams]);
+	}, [search, searchParams]);
 
 	return (
 		<header className={styles.header}>
@@ -62,7 +64,7 @@ export const Header = () => {
 					/>
 				</div>
 
-				<button className={`${styles.button_theme} button_behavior`} type="button" title="Tema">
+				<button onClick={toggleTheme} className={`${styles.button_theme} button_behavior`} type="button" title="Tema">
 					<svg className={styles.icon_theme} width="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
 						<path
 							fill="currentColor"

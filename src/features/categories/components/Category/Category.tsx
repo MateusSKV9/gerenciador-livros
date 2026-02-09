@@ -36,7 +36,7 @@ export const Category = ({ id, name, categoryMenu, toggleCategoyMenu, closeMenu,
 	};
 
 	const handleEdit = () => {
-		setSearchParams(`id=${id}`);
+		setSearchParams({ id: id });
 		closeMenu();
 		showModal();
 	};

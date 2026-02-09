@@ -6,7 +6,6 @@ import { format, parseISO } from "date-fns";
 import { type BookStatus } from "../../../../utils/book.types";
 import { ItemMenu } from "../../../../shared/components/ItemMenu/ItemMenu";
 import { useActionsBook } from "../../../../hooks/useBook";
-import { useSearchParams } from "react-router";
 import { useCategory } from "../../../../hooks/useCategory";
 
 type BookProps = {
@@ -23,6 +22,7 @@ type BookProps = {
 	toggleMenuBook: (id: string) => void;
 	closeBookMenu: () => void;
 	showModal: () => void;
+	handleEdit: (id: string) => void;
 };
 
 export const Book = React.memo(
@@ -39,20 +39,17 @@ export const Book = React.memo(
 		bookMenu,
 		toggleMenuBook,
 		closeBookMenu,
-		showModal,
+
+		handleEdit,
 	}: BookProps) => {
 		const { getCategory } = useCategory();
 		const { updateBook, deleteBook } = useActionsBook();
 
 		const menuRef = useRef<HTMLUListElement>(null);
-
-		const [, setSearchParams] = useSearchParams();
 		const bookCategory = getCategory(category);
 
 		const percentage = (currentPages / totalPages) * 100;
 		const currentProgress = Math.min(100, Math.max(0, Math.floor(percentage)));
-
-		// const handleToggleBookMenu = () => setBookMenu((prev) => !prev);
 
 		useEffect(() => {
 			if (!bookMenu) return;
@@ -96,12 +93,6 @@ export const Book = React.memo(
 			updateBook(id, { favorite: !favorite });
 		};
 
-		const handleEdit = () => {
-			setSearchParams(`id=${id}`);
-      closeBookMenu()
-			showModal();
-		};
-
 		const displayDate = (date: string) => (date ? format(parseISO(date), "dd/MM/yyyy") : "--/--/----");
 
 		return (
@@ -143,7 +134,12 @@ export const Book = React.memo(
 							</svg>
 						</button>
 						{bookMenu && (
-							<ItemMenu refMenu={menuRef} handleEdit={handleEdit} handleDelete={() => deleteBook(id)} variant="book" />
+							<ItemMenu
+								refMenu={menuRef}
+								handleEdit={() => handleEdit(id)}
+								handleDelete={() => deleteBook(id)}
+								variant="book"
+							/>
 						)}
 					</div>
 

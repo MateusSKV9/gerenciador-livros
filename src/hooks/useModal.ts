@@ -9,7 +9,11 @@ export const useModal = () => {
 
 	const closeModal = useCallback(() => {
 		setModal(false);
-		setSearchParams("");
+		setSearchParams((prev) => {
+			const next = new URLSearchParams(prev);
+			next.delete("id");
+			return next;
+		});
 	}, [setSearchParams]);
 
 	return { modal, showModal, closeModal };
