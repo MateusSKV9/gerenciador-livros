@@ -5,14 +5,17 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router";
 import { BookProvider } from "./providers/BookProvider.tsx";
 import { CategoryProvider } from "./providers/CategoryProvider.tsx";
+import { ThemeProvider } from "./providers/ThemeProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<BookProvider>
 			<CategoryProvider>
-				<BrowserRouter>
-					<App />
-				</BrowserRouter>
+				<ThemeProvider>
+					<BrowserRouter>
+						<App />
+					</BrowserRouter>
+				</ThemeProvider>
 			</CategoryProvider>
 		</BookProvider>
 	</StrictMode>
