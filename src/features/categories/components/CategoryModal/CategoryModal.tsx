@@ -14,7 +14,7 @@ export const CategoryModal = ({ close }: CategoryModalProps) => {
 	const categoryData = id ? getCategory(id) : undefined;
 
 	return (
-		<Modal close={close}>
+		<Modal close={close} title={id ? "Editando Categoria" : "Adicionando Categoria"}>
 			{id && !categoryData ? (
 				<h2>Carregando...</h2>
 			) : (

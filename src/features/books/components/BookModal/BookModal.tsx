@@ -14,7 +14,7 @@ export const BookModal = ({ close }: BookModalProps) => {
 	const bookData = id ? getBook(id) : undefined;
 
 	return (
-		<Modal close={close}>
+		<Modal close={close} title={id ? "Editando Livro" : "Adicionando Livro"}>
 			{id && !bookData ? <h2>carregando...</h2> : <BookForm key={id || "new"} bookData={bookData} close={close} />}
 		</Modal>
 	);

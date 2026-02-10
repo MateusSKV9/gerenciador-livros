@@ -4,10 +4,11 @@ import { createPortal } from "react-dom";
 
 type ModalProps = {
 	children: ReactNode;
+	title: string;
 	close: () => void;
 };
 
-export const Modal = ({ children, close }: ModalProps) => {
+export const Modal = ({ title, children, close }: ModalProps) => {
 	const modal = document.querySelector("#root-modal");
 	const modalRef = useRef(null);
 
@@ -25,7 +26,7 @@ export const Modal = ({ children, close }: ModalProps) => {
 		<div onClick={close} className={styles.overlay}>
 			<div onClick={(e) => e.stopPropagation()} ref={modalRef} className={styles.modal}>
 				<header className={styles.header}>
-					<h2>Adicionando Livro</h2>
+					<h2>{title}</h2>
 					<button className={styles.button} onClick={close} type="button" title="Fechar">
 						<svg className={styles.icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
 							<path
