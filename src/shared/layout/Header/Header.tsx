@@ -66,7 +66,7 @@ export const Header = () => {
 						</li>
 						<li className={styles.item}>
 							<Link className={`${styles.link} button_behavior`} to="/categories">
-								Categories
+								Categorias
 							</Link>
 						</li>
 					</ul>
