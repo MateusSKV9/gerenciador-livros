@@ -3,8 +3,9 @@ import { CategoryContext } from "../hooks/useCategory";
 import type { CategoryType } from "../utils/category";
 
 const initialCategories: CategoryType[] = [
-	{ id: "1", name: "Cristão" },
-	{ id: "2", name: "Bíblia" },
+	{ id: "1", name: "Bíblia" },
+	{ id: "2", name: "Cristão" },
+	{ id: "3", name: "Desenvolvimento Pessoal" },
 ];
 
 type CategoryProviderProps = {

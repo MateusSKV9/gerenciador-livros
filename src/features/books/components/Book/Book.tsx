@@ -77,7 +77,12 @@ export const Book = React.memo(
 
 		const handleClick = () => {
 			if (status === "to_read") {
-				updateBook(id, { status: "reading", currentPages: 0 });
+				updateBook(id, {
+					status: "reading",
+					currentPages: 0,
+					startDate: format(new Date(), "yyyy-MM-dd"),
+					endDate: "",
+				});
 				return;
 			}
 
