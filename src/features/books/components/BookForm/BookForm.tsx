@@ -43,6 +43,7 @@ export const BookForm = ({ close, bookData }: BookFormProps) => {
 				label="Nome"
 				type="text"
 				placeholder="Digite o nome do livro"
+				required
 			/>
 			<div className={styles.wrapper}>
 				<Input
@@ -53,6 +54,7 @@ export const BookForm = ({ close, bookData }: BookFormProps) => {
 					name="totalPages"
 					type="number"
 					placeholder="Digite a quantidade de páginas"
+					required
 				/>
 				<Select
 					id="category"
@@ -61,9 +63,7 @@ export const BookForm = ({ close, bookData }: BookFormProps) => {
 					value={book.category ? book.category : ""}
 					label="Categoria"
 					name="category"
-				>
-					a
-				</Select>
+				></Select>
 			</div>
 			<div className={styles.wrapper}>
 				<Input

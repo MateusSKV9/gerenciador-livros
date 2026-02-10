@@ -7,7 +7,7 @@ export const Header = () => {
 	const { toggleTheme } = useTheme();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const search = searchParams.get("search") ?? "";
-	const [showMenu, setShowMenu] = useState(window.innerWidth <= 600);
+	const [showMenu, setShowMenu] = useState(window.innerWidth > 600);
 	const navRef = useRef<HTMLDivElement | null>(null);
 	const btnMenuRef = useRef<HTMLButtonElement | null>(null);
 

@@ -7,10 +7,11 @@ type InputProps<T> = {
 	label: string;
 	placeholder?: string;
 	value: string | number;
+	required?: boolean;
 	onChange: (name: keyof T, value: string | number) => void;
 };
 
-export function Input<T>({ id, name, value, type, label, placeholder, onChange }: InputProps<T>) {
+export function Input<T>({ id, name, value, type, label, placeholder, required, onChange }: InputProps<T>) {
 	return (
 		<div className={styles.form_controll}>
 			<label className={styles.label} htmlFor={id}>
@@ -24,6 +25,8 @@ export function Input<T>({ id, name, value, type, label, placeholder, onChange }
 				value={value}
 				id={id}
 				placeholder={placeholder}
+				required={required}
+				maxLength={45}
 			/>
 		</div>
 	);

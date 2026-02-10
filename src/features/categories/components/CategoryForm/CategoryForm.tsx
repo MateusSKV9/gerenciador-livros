@@ -37,6 +37,7 @@ export const CategoryForm = ({ categoryData, close }: CategoryFormProps) => {
 				type="text"
 				placeholder="Digite o nome da categoria"
 				onChange={handleChange}
+				required
 				value={category.name ? category.name : ""}
 			/>
 		</Form>

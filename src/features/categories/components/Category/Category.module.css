@@ -16,3 +16,7 @@
 	border: none;
 	background-color: transparent;
 }
+
+.name {
+	word-break: break-all;
+}

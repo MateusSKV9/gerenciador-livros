@@ -1,13 +1,11 @@
 import type { BookType } from "../../../../types/book";
 import type { CategoryType } from "../../../../utils/category";
 import styles from "./Select.module.css";
-import type { ReactNode } from "react";
 
 type SelectProps = {
 	id: string;
 	name: keyof BookType;
 	label: string;
-	children: ReactNode;
 	value: string | number;
 	options: CategoryType[];
 	onChange: (name: keyof BookType, value: string | number) => void;
