@@ -88,6 +88,7 @@ O projeto foi desenvolvido com foco em **organização de código**, **escala**,
 - **Estado global centralizado** com Context API
 - **Controle de performance:** uso consciente de memoização
 - **Sincronização de estado com URL**
+- **Dados persistentes e sincronizados via localStorage**
 
 ---
 
