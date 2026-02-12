@@ -71,7 +71,7 @@ export const Books = () => {
 	return (
 		<>
 			<section className={styles.section}>
-				<HeaderSection title="Livros">
+				<HeaderSection title="Livros" quantity={selectedBooks.length}>
 					<div className={`${styles.container_buttons}`}>
 						<Button handleClick={showModal}>Adicionar</Button>
 

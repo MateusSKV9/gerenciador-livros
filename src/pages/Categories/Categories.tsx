@@ -24,7 +24,7 @@ export const Categories = () => {
 	return (
 		<>
 			<section className={styles.section}>
-				<HeaderSection title="Categorias">
+				<HeaderSection title="Categorias" quantity={categories.length}>
 					<div className={styles.container_buttons}>
 						<Button handleClick={showModal}>Adicionar</Button>
 					</div>
