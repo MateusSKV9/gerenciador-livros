@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form } from "../../../../shared/components/Forms/Form/Form";
 import { Input } from "../../../../shared/components/Forms/Input/Input";
-import type { CategoryType } from "../../../../utils/category";
+import type { CategoryType } from "../../../../types/category";
 import { useCategory } from "../../../../hooks/useCategory";
 
 type CategoryFormProps = {

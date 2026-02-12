@@ -1,5 +1,5 @@
 import type { BookType } from "../../../../types/book";
-import type { CategoryType } from "../../../../utils/category";
+import type { CategoryType } from "../../../../types/category";
 import styles from "./Select.module.css";
 
 type SelectProps = {

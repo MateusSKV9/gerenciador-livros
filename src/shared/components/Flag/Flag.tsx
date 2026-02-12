@@ -1,4 +1,4 @@
-import { BOOK_STATUS, type BookStatus } from "../../../utils/book.types";
+import { BOOK_STATUS, type BookStatus } from "../../../types/book-status";
 import styles from "./Flag.module.css";
 
 type FlagProps = {

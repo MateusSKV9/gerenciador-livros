@@ -3,7 +3,7 @@ import { Flag } from "../../../../shared/components/Flag/Flag";
 import { BookButton } from "../BookButton/BookButton";
 import styles from "./Book.module.css";
 import { format, parseISO } from "date-fns";
-import { type BookStatus } from "../../../../utils/book.types";
+import { type BookStatus } from "../../../../types/book-status";
 import { ItemMenu } from "../../../../shared/components/ItemMenu/ItemMenu";
 import { useActionsBook } from "../../../../hooks/useBook";
 import { useCategory } from "../../../../hooks/useCategory";

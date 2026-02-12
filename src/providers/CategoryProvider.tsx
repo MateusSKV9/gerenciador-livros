@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { CategoryContext } from "../hooks/useCategory";
-import type { CategoryType } from "../utils/category";
+import type { CategoryType } from "../types/category";
 
 const initialCategories: CategoryType[] = [
 	{ id: "1", name: "Bíblia" },

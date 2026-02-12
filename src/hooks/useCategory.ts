@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { CategoryType } from "../utils/category";
+import type { CategoryType } from "../types/category";
 
 type useCategoryProps = {
 	categories: CategoryType[];

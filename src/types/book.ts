@@ -1,4 +1,4 @@
-import type { BookStatus } from "../utils/book.types";
+import type { BookStatus } from "./book-status";
 
 export type BookType = {
 	id: string;
