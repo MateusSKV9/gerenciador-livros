@@ -1,29 +1,19 @@
-import type { BookType } from "../../../../types/book";
+import { forwardRef, type SelectHTMLAttributes } from "react";
 import type { CategoryType } from "../../../../types/category";
 import styles from "./Select.module.css";
 
 type SelectProps = {
-	id: string;
-	name: keyof BookType;
 	label: string;
-	value: string | number;
 	options: CategoryType[];
-	onChange: (name: keyof BookType, value: string | number) => void;
-};
+} & SelectHTMLAttributes<HTMLSelectElement>;
 
-export const Select = ({ id, name, label, value, options, onChange }: SelectProps) => {
+export const Select = forwardRef<HTMLSelectElement, SelectProps>(({ label, options, ...props }: SelectProps, ref) => {
 	return (
 		<div className={styles.form_controll}>
-			<label className={styles.label} htmlFor={id}>
+			<label className={styles.label} htmlFor={props.id}>
 				{label}
 			</label>
-			<select
-				onChange={(e) => onChange(name, e.target.value)}
-				value={value}
-				className={styles.select}
-				name={name}
-				id={id}
-			>
+			<select ref={ref} className={styles.select} {...props}>
 				<option value="">Selecione uma categoria</option>
 				{options.map((option: CategoryType) => (
 					<option key={option.id} value={option.id}>
@@ -33,4 +23,6 @@ export const Select = ({ id, name, label, value, options, onChange }: SelectProp
 			</select>
 		</div>
 	);
-};
+});
+
+Select.displayName = "Select";

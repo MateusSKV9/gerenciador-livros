@@ -5,9 +5,9 @@ export type BookType = {
 	name: string;
 	totalPages: number;
 	currentPages: number;
-	category: string;
+	category?: string;
 	status: BookStatus;
 	favorite: boolean;
-	startDate: string;
-	endDate: string;
+	startDate?: string;
+	endDate?: string;
 };

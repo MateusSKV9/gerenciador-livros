@@ -1,33 +1,25 @@
+import { forwardRef, type InputHTMLAttributes } from "react";
 import styles from "./Input.module.css";
 
-type InputProps<T> = {
-	id: string;
-	name: keyof T;
-	type: string;
+type InputProps = {
 	label: string;
-	placeholder?: string;
-	value: string | number;
-	required?: boolean;
-	onChange: (name: keyof T, value: string | number) => void;
-};
+	error?: string;
+} & InputHTMLAttributes<HTMLInputElement>;
 
-export function Input<T>({ id, name, value, type, label, placeholder, required, onChange }: InputProps<T>) {
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ label, error, ...props }: InputProps, ref) => {
 	return (
 		<div className={styles.form_controll}>
-			<label className={styles.label} htmlFor={id}>
+			<label className={styles.label} htmlFor={props.id}>
 				{label}
 			</label>
-			<input
-				onChange={(e) => onChange(name, e.target.value)}
-				className={styles.input}
-				type={type}
-				name={String(name)}
-				value={value}
-				id={id}
-				placeholder={placeholder}
-				required={required}
-				maxLength={45}
-			/>
+			<input ref={ref} className={styles.input} {...props} />
+			{error && (
+				<span>
+					<span className={styles.error}>*</span> {error}
+				</span>
+			)}
 		</div>
 	);
-}
+});
+
+Input.displayName = "Input";

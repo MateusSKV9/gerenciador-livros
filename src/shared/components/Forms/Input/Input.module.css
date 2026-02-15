@@ -23,3 +23,7 @@
 	-webkit-appearance: none;
 	margin: 0;
 }
+
+.error {
+	color: var(--red);
+}

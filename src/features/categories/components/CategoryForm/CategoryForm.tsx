@@ -1,44 +1,48 @@
-import React, { useState } from "react";
 import { Form } from "../../../../shared/components/Forms/Form/Form";
 import { Input } from "../../../../shared/components/Forms/Input/Input";
 import type { CategoryType } from "../../../../types/category";
 import { useCategory } from "../../../../hooks/useCategory";
+import { useForm, type SubmitHandler } from "react-hook-form";
 
 type CategoryFormProps = {
 	categoryData: CategoryType | undefined;
 	close: () => void;
 };
 
+type CategoryFormData = {
+	name: string;
+};
+
 export const CategoryForm = ({ categoryData, close }: CategoryFormProps) => {
-	const [category, setCategory] = useState<Partial<CategoryType>>(categoryData || {});
+	const {
+		register,
+		formState: { errors },
+		handleSubmit,
+	} = useForm<CategoryFormData>({ defaultValues: categoryData || {} });
+
 	const { createCategory, updateCategory } = useCategory();
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		if (category.id) {
-			updateCategory(category.id, { ...category });
+	const handleOnSubmit: SubmitHandler<CategoryFormData> = (data) => {
+		if (categoryData?.id) {
+			updateCategory(categoryData.id, { ...data });
 		} else {
-			if (!category.name) return;
-			createCategory({ id: crypto.randomUUID(), name: category.name });
+			createCategory({ id: crypto.randomUUID(), ...data });
 		}
 		close();
 	};
 
-	const handleChange = (name: keyof CategoryType, value: string | number) => {
-		setCategory((prev) => ({ ...prev, [name]: value }));
-	};
-
 	return (
-		<Form onSubmit={handleSubmit}>
-			<Input<CategoryType>
+		<Form onSubmit={handleSubmit(handleOnSubmit)}>
+			<Input
 				id="name"
-				name="name"
 				label="Nome"
 				type="text"
 				placeholder="Digite o nome da categoria"
-				onChange={handleChange}
-				required
-				value={category.name ? category.name : ""}
+				error={errors.name?.message}
+				{...register("name", {
+					required: "Nome é obrigatório",
+					maxLength: { value: 45, message: "Máximo de 45 caracteres" },
+				})}
 			/>
 		</Form>
 	);
