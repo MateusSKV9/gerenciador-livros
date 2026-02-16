@@ -71,6 +71,18 @@ O projeto foi desenvolvido com foco em **organização de código**, **escala**,
 
 ---
 
+### 🧾 Validação de Formulários
+- **`React Hook Form`** para gerenciamento performático e otimizado de formulários
+- **`Zod`** para validação declarativa e segura baseada em schema
+- **Benefícios:**
+
+  - Validação tipada e centralizada
+  - Mensagens de erro controladas
+  - Melhor performance (menos re-renderizações)
+  - Código mais previsível e escalável
+
+---
+
 ### 🗂️ Gerenciamento de categorias
 
 - Criação de categorias
@@ -190,11 +202,15 @@ src
 
 ## 🚀 Tecnologias Utilizadas
 
-- **React** (Hooks, Context API, React Router)
+- **React** (Hooks, Context API)
+- **React Hook Form**
+- **Zod**
+- **React Router DOM**
 - **TypeScript**
 - **CSS Modules**
 - **date-fns**
 - **Vite**
+- **LocalStorage**
 
 ---
 
