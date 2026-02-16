@@ -95,7 +95,7 @@ O projeto foi desenvolvido com foco em **organização de código**, **escala**,
 
 ## 🛠️ Requisitos Técnicos
 
-- **Validação básica de formulários**
+- **Validação robusta de formulários com schema**
 - **Responsividade:** layout adaptado para diferentes tamanhos de tela
 - **Estado global centralizado** com Context API
 - **Controle de performance:** uso consciente de memoização
