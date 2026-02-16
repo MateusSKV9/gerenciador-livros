@@ -3,22 +3,26 @@ import { Input } from "../../../../shared/components/Forms/Input/Input";
 import type { CategoryType } from "../../../../types/category";
 import { useCategory } from "../../../../hooks/useCategory";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type CategoryFormProps = {
 	categoryData: CategoryType | undefined;
 	close: () => void;
 };
 
-type CategoryFormData = {
-	name: string;
-};
+const CategorySchema = z.object({
+	name: z.string().min(1, "Nome é obrigatório").max(45, "Máximo de 45 caracteres"),
+});
+
+type CategoryFormData = z.infer<typeof CategorySchema>;
 
 export const CategoryForm = ({ categoryData, close }: CategoryFormProps) => {
 	const {
 		register,
 		formState: { errors },
 		handleSubmit,
-	} = useForm<CategoryFormData>({ defaultValues: categoryData || {} });
+	} = useForm<CategoryFormData>({ resolver: zodResolver(CategorySchema), defaultValues: categoryData || {} });
 
 	const { createCategory, updateCategory } = useCategory();
 
@@ -39,10 +43,7 @@ export const CategoryForm = ({ categoryData, close }: CategoryFormProps) => {
 				type="text"
 				placeholder="Digite o nome da categoria"
 				error={errors.name?.message}
-				{...register("name", {
-					required: "Nome é obrigatório",
-					maxLength: { value: 45, message: "Máximo de 45 caracteres" },
-				})}
+				{...register("name")}
 			/>
 		</Form>
 	);

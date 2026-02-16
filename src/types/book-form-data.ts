@@ -1,7 +1,4 @@
-export type BookFormData = {
-	name: string;
-	totalPages: number;
-	category?: string;
-	startDate?: string;
-	endDate?: string;
-};
+import type z from "zod";
+import type { BookSchema } from "../schemas/bookSchema";
+
+export type BookFormData = z.infer<typeof BookSchema>;

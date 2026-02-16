@@ -6,7 +6,10 @@ import type { BookType } from "../../../../types/book";
 import { useActionsBook, useBooks } from "../../../../hooks/useBook";
 import { useCategory } from "../../../../hooks/useCategory";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { BookSchema } from "../../../../schemas/bookSchema";
 import type { BookFormData } from "../../../../types/book-form-data";
+import { format, parseISO, startOfDay } from "date-fns";
 
 type BookFormProps = {
 	close: () => void;
@@ -22,7 +25,16 @@ export const BookForm = ({ close, bookData }: BookFormProps) => {
 		register,
 		formState: { errors },
 		handleSubmit,
-	} = useForm<BookFormData>({ defaultValues: bookData || {} });
+	} = useForm({
+		resolver: zodResolver(BookSchema),
+		defaultValues: bookData
+			? {
+					...bookData,
+					startDate: bookData.startDate ? format(startOfDay(parseISO(bookData.startDate)), "yyyy-MM-dd") : undefined,
+					endDate: bookData.endDate ? format(startOfDay(parseISO(bookData.endDate)), "yyyy-MM-dd") : undefined,
+			  }
+			: {},
+	});
 
 	const handleOnSubmit: SubmitHandler<BookFormData> = (data) => {
 		if (bookData?.id) {
@@ -41,10 +53,7 @@ export const BookForm = ({ close, bookData }: BookFormProps) => {
 				type="text"
 				placeholder="Digite o nome do livro"
 				error={errors.name?.message}
-				{...register("name", {
-					required: "Nome é obrigatório",
-					maxLength: { value: 45, message: "Máximo de 45 caracteres" },
-				})}
+				{...register("name")}
 			/>
 			<div className={styles.wrapper}>
 				<Input
@@ -53,17 +62,20 @@ export const BookForm = ({ close, bookData }: BookFormProps) => {
 					type="number"
 					placeholder="Digite a quantidade de páginas"
 					error={errors.totalPages?.message}
-					{...register("totalPages", {
-						required: "Quantidade de páginas obrigatória",
-						min: { value: 1, message: "Mínimo de 1 página." },
-						valueAsNumber: true,
-					})}
+					{...register("totalPages")}
 				/>
 				<Select id="category" options={categories} label="Categoria" {...register("category")} />
 			</div>
+
 			<div className={styles.wrapper}>
-				<Input id="startDate" label="Data Início" type="date" {...register("startDate")} />
-				<Input id="endDate" label="Data Fim" type="date" {...register("endDate")} />
+				<Input
+					id="startDate"
+					label="Data Início"
+					type="date"
+					error={errors.startDate?.message}
+					{...register("startDate")}
+				/>
+				<Input id="endDate" label="Data Fim" type="date" error={errors.endDate?.message} {...register("endDate")} />
 			</div>
 		</Form>
 	);
