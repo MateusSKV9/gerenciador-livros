@@ -13,11 +13,11 @@ type BookProps = {
 	name: string;
 	totalPages: number;
 	currentPages: number;
-	category: string;
+	category?: string;
 	status: BookStatus;
 	favorite: boolean;
-	startDate: string;
-	endDate: string;
+	startDate?: string;
+	endDate?: string;
 	bookMenu: boolean;
 	toggleMenuBook: (id: string) => void;
 	closeBookMenu: () => void;
@@ -46,7 +46,7 @@ export const Book = React.memo(
 		const { updateBook, deleteBook } = useActionsBook();
 
 		const menuRef = useRef<HTMLUListElement>(null);
-		const bookCategory = getCategory(category);
+		const bookCategory = category ? getCategory(category) : undefined;
 
 		const percentage = (currentPages / totalPages) * 100;
 		const currentProgress = Math.min(100, Math.max(0, Math.floor(percentage)));
@@ -98,7 +98,7 @@ export const Book = React.memo(
 			updateBook(id, { favorite: !favorite });
 		};
 
-		const displayDate = (date: string) => (date ? format(parseISO(date), "dd/MM/yyyy") : "--/--/----");
+		const displayDate = (date: string | undefined) => (date ? format(parseISO(date), "dd/MM/yyyy") : "--/--/----");
 
 		return (
 			<article className={styles.book}>
