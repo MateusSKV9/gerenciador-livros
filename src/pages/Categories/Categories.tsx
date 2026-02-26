@@ -8,7 +8,7 @@ import { CategoryModal } from "../../features/categories/components/CategoryModa
 import { useCallback, useState } from "react";
 import { useModal } from "../../hooks/useModal";
 
-export const Categories = () => {
+export default function Categories() {
 	const { categories } = useCategory();
 	const { modal, showModal, closeModal } = useModal();
 	const [categoryMenu, setCategoryMenu] = useState<string | null>("");
@@ -47,4 +47,4 @@ export const Categories = () => {
 			{modal && <CategoryModal close={closeModal} />}
 		</>
 	);
-};
+}

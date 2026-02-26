@@ -4,13 +4,14 @@ import { ContainerUI } from "../../shared/components/ContainerUI/ContainerUI";
 import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSection";
 import { Button } from "../../shared/components/Button/Button";
 
-import { BookModal } from "../../features/books/components/BookModal/BookModal";
 import { useBooks } from "../../hooks/useBook";
-import { useCallback, useMemo, useState } from "react";
+import { lazy, Suspense, useCallback, useMemo, useState } from "react";
 import { useCategory } from "../../hooks/useCategory";
 import type { BookType } from "../../types/book";
 import { useModal } from "../../hooks/useModal";
 import { useSearchParams } from "react-router";
+
+const BookModal = lazy(() => import("../../features/books/components/BookModal/BookModal"));
 
 const FILTERS = {
 	favorites: { label: "Favoritos", compare: (book: BookType) => book.favorite },
@@ -133,7 +134,11 @@ export const Books = () => {
 				</ContainerUI>
 			</section>
 
-			{modal && <BookModal close={closeModal}></BookModal>}
+			{modal && (
+				<Suspense fallback={<p>Carregando modal...</p>}>
+					<BookModal close={closeModal}></BookModal>
+				</Suspense>
+			)}
 		</>
 	);
 };

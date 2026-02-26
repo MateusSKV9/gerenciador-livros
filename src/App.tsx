@@ -4,17 +4,21 @@ import { Footer } from "./shared/layout/Footer/Footer";
 import { Header } from "./shared/layout/Header/Header";
 import { Main } from "./shared/layout/Main/Main";
 import { Books } from "./pages/Books/Books";
-import { Categories } from "./pages/Categories/Categories";
+import { lazy, Suspense } from "react";
+
+const Categories = lazy(() => import("./pages/Categories/Categories"));
 
 function App() {
 	return (
 		<>
 			<Header />
 			<Main>
-				<Routes>
-					<Route path="/" element={<Books />} />
-					<Route path="/categories" element={<Categories />} />
-				</Routes>
+				<Suspense fallback={<p>Carregando...</p>}>
+					<Routes>
+						<Route path="/" element={<Books />} />
+						<Route path="/categories" element={<Categories />} />
+					</Routes>
+				</Suspense>
 			</Main>
 			<Footer />
 		</>

@@ -7,7 +7,7 @@ type BookModalProps = {
 	close: () => void;
 };
 
-export const BookModal = ({ close }: BookModalProps) => {
+export default function BookModal({ close }: BookModalProps) {
 	const [searchParams] = useSearchParams();
 	const { getBook } = useBooks();
 	const id = searchParams.get("id") || undefined;
@@ -18,4 +18,4 @@ export const BookModal = ({ close }: BookModalProps) => {
 			{id && !bookData ? <h2>carregando...</h2> : <BookForm key={id || "new"} bookData={bookData} close={close} />}
 		</Modal>
 	);
-};
+}
