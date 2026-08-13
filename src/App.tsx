@@ -1,10 +1,7 @@
 import { Route, Routes } from "react-router";
-import "./App.css";
-import { Footer } from "./shared/layout/Footer/Footer";
-import { Header } from "./shared/layout/Header/Header";
-import { Main } from "./shared/layout/Main/Main";
-import { Books } from "./pages/Books/Books";
 import { lazy, Suspense } from "react";
+import { Footer, Header, Main } from "./shared";
+import { Books } from "./pages/Books/Books";
 
 const Categories = lazy(() => import("./pages/Categories/Categories"));
 
