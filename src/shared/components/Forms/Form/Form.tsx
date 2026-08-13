@@ -9,7 +9,7 @@ type FormProps = {
 
 export const Form = ({ children, onSubmit }: FormProps) => {
 	return (
-		<form onSubmit={onSubmit} className={styles.form}>
+		<form noValidate onSubmit={onSubmit} className={styles.form}>
 			<div className={styles.body}>{children}</div>
 			<SubmitButton text="Enviar" />
 		</form>

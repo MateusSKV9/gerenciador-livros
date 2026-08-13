@@ -1,19 +1,15 @@
-import styles from "./BookForm.module.css";
-import { Form } from "../../../../shared/components/Forms/Form/Form";
-import { Input } from "../../../../shared/components/Forms/Input/Input";
-import { Select } from "../../../../shared/components/Forms/Select/Select";
-import type { BookType } from "../../../../types/book";
-import { useActionsBook, useBooks } from "../../../../hooks/useBook";
-import { useCategory } from "../../../../hooks/useCategory";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookSchema } from "../../../../schemas/bookSchema";
-import type { BookFormData } from "../../../../types/book-form-data";
 import { format, parseISO, startOfDay } from "date-fns";
+import { useBooks, useActionsBook } from "@/hooks";
+import { Form, Input, Select } from "@/shared";
+import { useCategory } from "@/features/categories";
+import { type BookFormData, BookFormSchema, type Book } from "../../schemas/book-schema";
+import styles from "./BookForm.module.css";
 
 type BookFormProps = {
 	close: () => void;
-	bookData: BookType | undefined;
+	bookData: Book | undefined;
 };
 
 export const BookForm = ({ close, bookData }: BookFormProps) => {
@@ -26,7 +22,7 @@ export const BookForm = ({ close, bookData }: BookFormProps) => {
 		formState: { errors },
 		handleSubmit,
 	} = useForm({
-		resolver: zodResolver(BookSchema),
+		resolver: zodResolver(BookFormSchema),
 		defaultValues: bookData
 			? {
 					...bookData,
@@ -62,7 +58,7 @@ export const BookForm = ({ close, bookData }: BookFormProps) => {
 					type="number"
 					placeholder="Digite a quantidade de páginas"
 					error={errors.totalPages?.message}
-					{...register("totalPages")}
+					{...register("totalPages", { valueAsNumber: true })}
 				/>
 				<Select id="category" options={categories} label="Categoria" {...register("category")} />
 			</div>

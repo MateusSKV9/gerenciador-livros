@@ -1,13 +1,13 @@
+import { useBooks } from "@/hooks";
 import { useSearchParams } from "react-router";
-import { Modal } from "../../../../shared/components/Modal/Modal";
 import { BookForm } from "../BookForm/BookForm";
-import { useBooks } from "../../../../hooks/useBook";
+import { Modal } from "@/shared";
 
 type BookModalProps = {
 	close: () => void;
 };
 
-export default function BookModal({ close }: BookModalProps) {
+export function BookModal({ close }: BookModalProps) {
 	const [searchParams] = useSearchParams();
 	const { getBook } = useBooks();
 	const id = searchParams.get("id") || undefined;

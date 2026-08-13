@@ -1,14 +1,14 @@
 import { createContext, useContext } from "react";
-import type { BookType } from "../types/book";
+import type { Book } from "../schemas/book-schema";
 
 type BookContextType = {
-	books: BookType[];
-	createBook: (book: BookType) => void;
-	getBook: (id: string) => BookType | undefined;
+	books: Book[];
+	createBook: (book: Book) => void;
+	getBook: (id: string) => Book | undefined;
 };
 
 type BookActionsContextProps = {
-	updateBook: (id: string, data: Partial<BookType>) => void;
+	updateBook: (id: string, data: Partial<Book>) => void;
 	deleteBook: (id: string) => void;
 };
 

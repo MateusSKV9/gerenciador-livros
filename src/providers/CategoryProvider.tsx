@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
-import { CategoryContext } from "../hooks/useCategory";
-import type { CategoryType } from "../types/category";
+import { CategoryContext } from "@/features/categories/hooks/use-category";
+import type { Category } from "@/features/categories";
 
-const initialCategories: CategoryType[] = [
+const initialCategories: Category[] = [
 	{ id: "1", name: "Bíblia" },
 	{ id: "2", name: "Cristão" },
 	{ id: "3", name: "Desenvolvimento Pessoal" },
@@ -13,7 +13,7 @@ type CategoryProviderProps = {
 };
 
 export const CategoryProvider = ({ children }: CategoryProviderProps) => {
-	const [categories, setCategories] = useState<CategoryType[]>(() => {
+	const [categories, setCategories] = useState<Category[]>(() => {
 		const stored = localStorage.getItem("categories");
 		return stored ? JSON.parse(stored) : initialCategories;
 	});
@@ -25,11 +25,11 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
 		[categories]
 	);
 
-	const createCategory = useCallback((category: CategoryType) => {
+	const createCategory = useCallback((category: Category) => {
 		setCategories((prev) => [...prev, category]);
 	}, []);
 
-	const updateCategory = useCallback((id: string, data: Partial<CategoryType>) => {
+	const updateCategory = useCallback((id: string, data: Partial<Category>) => {
 		setCategories((prev) => prev.map((category) => (category.id === id ? { ...category, ...data } : category)));
 	}, []);
 

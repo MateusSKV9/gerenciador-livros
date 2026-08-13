@@ -1,10 +1,10 @@
 import { forwardRef, type SelectHTMLAttributes } from "react";
-import type { CategoryType } from "../../../../types/category";
+import type { Category } from "@/features/categories";
 import styles from "./Select.module.css";
 
 type SelectProps = {
 	label: string;
-	options: CategoryType[];
+	options: Category[];
 } & SelectHTMLAttributes<HTMLSelectElement>;
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(({ label, options, ...props }: SelectProps, ref) => {
@@ -15,7 +15,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(({ label, optio
 			</label>
 			<select ref={ref} className={styles.select} {...props}>
 				<option value="">Selecione uma categoria</option>
-				{options.map((option: CategoryType) => (
+				{options.map((option: Category) => (
 					<option key={option.id} value={option.id}>
 						{option.name}
 					</option>

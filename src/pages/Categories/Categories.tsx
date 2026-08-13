@@ -1,19 +1,15 @@
-import { Button } from "../../shared/components/Button/Button";
-import { ContainerUI } from "../../shared/components/ContainerUI/ContainerUI";
-import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSection";
-import styles from "./Categories.module.css";
-import { Category } from "../../features/categories/components/Category/Category";
-import { useCategory } from "../../hooks/useCategory";
-import { CategoryModal } from "../../features/categories/components/CategoryModal/CategoryModal";
 import { useCallback, useState } from "react";
-import { useModal } from "../../hooks/useModal";
+import { CategoryCard, CategoryModal, useCategory } from "@/features/categories";
+import { useModal } from "@/hooks";
+import { HeaderSection, Button, ContainerUI } from "@/shared";
+import styles from "./Categories.module.css";
 
 export default function Categories() {
 	const { categories } = useCategory();
 	const { modal, showModal, closeModal } = useModal();
 	const [categoryMenu, setCategoryMenu] = useState<string | null>("");
 
-	const toggleCategoyMenu = useCallback((id: string) => {
+	const toggleCategoryMenu = useCallback((id: string) => {
 		setCategoryMenu((prev) => (prev === id ? null : id));
 	}, []);
 
@@ -32,13 +28,13 @@ export default function Categories() {
 
 				<ContainerUI variant="categories">
 					{categories.map((category) => (
-						<Category
+						<CategoryCard
 							key={category.id}
 							id={category.id}
 							name={category.name}
 							showModal={showModal}
 							categoryMenu={categoryMenu === category.id}
-							toggleCategoyMenu={toggleCategoyMenu}
+							toggleCategoryMenu={toggleCategoryMenu}
 							closeMenu={closeMenu}
 						/>
 					))}

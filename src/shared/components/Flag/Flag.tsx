@@ -1,5 +1,6 @@
-import { BOOK_STATUS, type BookStatus } from "../../../types/book-status";
+import type { BookStatus } from "@/features/books";
 import styles from "./Flag.module.css";
+import { BOOK_STATUS } from "@/features/books/schemas/book-schema";
 
 type FlagProps = {
 	text: string;

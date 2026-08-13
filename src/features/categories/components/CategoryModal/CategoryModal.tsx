@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router";
-import { useCategory } from "../../../../hooks/useCategory";
-import { Modal } from "../../../../shared/components/Modal/Modal";
 import { CategoryForm } from "../CategoryForm/CategoryForm";
+import { useCategory } from "../../hooks/use-category";
+import { Modal } from "@/shared";
 
 type CategoryModalProps = {
 	close: () => void;

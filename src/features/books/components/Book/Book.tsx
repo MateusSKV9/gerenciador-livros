@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { Flag } from "../../../../shared/components/Flag/Flag";
+import { useActionsBook } from "@/hooks";
 import { BookButton } from "../BookButton/BookButton";
-import styles from "./Book.module.css";
 import { format, parseISO } from "date-fns";
-import { type BookStatus } from "../../../../types/book-status";
-import { ItemMenu } from "../../../../shared/components/ItemMenu/ItemMenu";
-import { useActionsBook } from "../../../../hooks/useBook";
-import { useCategory } from "../../../../hooks/useCategory";
+import { Flag, ItemMenu } from "@/shared";
+import { useCategory } from "@/features/categories";
+import styles from "./Book.module.css";
+import type { BookStatus } from "../../schemas/book-schema";
 
 type BookProps = {
 	id: string;

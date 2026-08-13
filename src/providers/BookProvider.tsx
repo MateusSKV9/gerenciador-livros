@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
-import type { BookType } from "../types/book";
-import { BooksContext, BookActionsContext } from "../hooks/useBook";
+import { BooksContext, BookActionsContext } from "@/features/books/hooks/use-book";
+import type { Book } from "@/features/books";
 
-const initialBooks: BookType[] = [
+const initialBooks: Book[] = [
 	{
 		id: "1",
 		name: "Bíblia",
@@ -54,18 +54,18 @@ type BookProviderProps = {
 };
 
 export const BookProvider = ({ children }: BookProviderProps) => {
-	const [books, setBooks] = useState<BookType[]>(() => {
+	const [books, setBooks] = useState<Book[]>(() => {
 		const stored = localStorage.getItem("books");
 		return stored ? JSON.parse(stored) : initialBooks;
 	});
 
 	const getBook = useCallback((id: string) => books.find((book) => book.id === id), [books]);
 
-	const createBook = useCallback((book: BookType) => {
+	const createBook = useCallback((book: Book) => {
 		setBooks((prev) => [...prev, book]);
 	}, []);
 
-	const updateBook = useCallback((id: string, data: Partial<BookType>) => {
+	const updateBook = useCallback((id: string, data: Partial<Book>) => {
 		setBooks((prev) => prev.map((book) => (book.id === id ? { ...book, ...data } : book)));
 	}, []);
 

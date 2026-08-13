@@ -1,28 +1,20 @@
-import { Form } from "../../../../shared/components/Forms/Form/Form";
-import { Input } from "../../../../shared/components/Forms/Input/Input";
-import type { CategoryType } from "../../../../types/category";
-import { useCategory } from "../../../../hooks/useCategory";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, Input } from "@/shared";
+import { useCategory } from "../../hooks/use-category";
+import { CategorySchema, type Category, type CategoryFormData } from "../../schemas/category-schema";
 
 type CategoryFormProps = {
-	categoryData: CategoryType | undefined;
+	categoryData: Category | undefined;
 	close: () => void;
 };
-
-const CategorySchema = z.object({
-	name: z.string().min(1, "Nome é obrigatório").max(45, "Máximo de 45 caracteres"),
-});
-
-type CategoryFormData = z.infer<typeof CategorySchema>;
 
 export const CategoryForm = ({ categoryData, close }: CategoryFormProps) => {
 	const {
 		register,
 		formState: { errors },
 		handleSubmit,
-	} = useForm<CategoryFormData>({ resolver: zodResolver(CategorySchema), defaultValues: categoryData || {} });
+	} = useForm({ resolver: zodResolver(CategorySchema), defaultValues: categoryData || {} });
 
 	const { createCategory, updateCategory } = useCategory();
 

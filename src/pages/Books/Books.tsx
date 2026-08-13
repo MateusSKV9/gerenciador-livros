@@ -1,23 +1,16 @@
-import styles from "./Books.module.css";
-import { Book } from "../../features/books/components/Book/Book";
-import { ContainerUI } from "../../shared/components/ContainerUI/ContainerUI";
-import { HeaderSection } from "../../shared/components/HeaderSection/HeaderSection";
-import { Button } from "../../shared/components/Button/Button";
-
-import { useBooks } from "../../hooks/useBook";
-import { lazy, Suspense, useCallback, useMemo, useState } from "react";
-import { useCategory } from "../../hooks/useCategory";
-import type { BookType } from "../../types/book";
-import { useModal } from "../../hooks/useModal";
+import { Suspense, useCallback, useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
-
-const BookModal = lazy(() => import("../../features/books/components/BookModal/BookModal"));
+import { BookCard, BookModal, type Book } from "@/features/books";
+import { useBooks, useModal } from "@/hooks";
+import { HeaderSection, Button, ContainerUI } from "@/shared";
+import { useCategory } from "@/features/categories";
+import styles from "./Books.module.css";
 
 const FILTERS = {
-	favorites: { label: "Favoritos", compare: (book: BookType) => book.favorite },
-	reading: { label: "Lendo", compare: (book: BookType) => book.status === "reading" },
-	to_read: { label: "Não lidos", compare: (book: BookType) => book.status === "to_read" },
-	completed: { label: "Lidos", compare: (book: BookType) => book.status === "completed" },
+	favorites: { label: "Favoritos", compare: (book: Book) => book.favorite },
+	reading: { label: "Lendo", compare: (book: Book) => book.status === "reading" },
+	to_read: { label: "Não lidos", compare: (book: Book) => book.status === "to_read" },
+	completed: { label: "Lidos", compare: (book: Book) => book.status === "completed" },
 };
 
 type SortersType = keyof typeof FILTERS;
@@ -27,9 +20,7 @@ export const Books = () => {
 	const { categories } = useCategory();
 	const { modal, showModal, closeModal } = useModal();
 	const [bookMenu, setBookMenu] = useState<string | null>(null);
-
 	const [filterSelected, setFilterSelected] = useState("");
-
 	const [searchParams, setSearchParams] = useSearchParams();
 	const search = searchParams.get("search");
 
@@ -110,7 +101,7 @@ export const Books = () => {
 				<ContainerUI variant="books">
 					{selectedBooks.length > 0 ? (
 						selectedBooks.map((book) => (
-							<Book
+							<BookCard
 								id={book.id}
 								key={book.id}
 								name={book.name}

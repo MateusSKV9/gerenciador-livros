@@ -1,19 +1,19 @@
 import { useEffect, useRef } from "react";
-import styles from "./Category.module.css";
-import { ItemMenu } from "../../../../shared/components/ItemMenu/ItemMenu";
-import { useCategory } from "../../../../hooks/useCategory";
 import { useSearchParams } from "react-router";
+import { ItemMenu } from "@/shared";
+import { useCategory } from "../../hooks/use-category";
+import styles from "./Category.module.css";
 
 type CategoryProps = {
 	id: string;
 	name: string;
 	categoryMenu: boolean;
-	toggleCategoyMenu: (id: string) => void;
+	toggleCategoryMenu: (id: string) => void;
 	closeMenu: () => void;
 	showModal: () => void;
 };
 
-export const Category = ({ id, name, categoryMenu, toggleCategoyMenu, closeMenu, showModal }: CategoryProps) => {
+export const Category = ({ id, name, categoryMenu, toggleCategoryMenu, closeMenu, showModal }: CategoryProps) => {
 	const { deleteCategory } = useCategory();
 	const [, setSearchParams] = useSearchParams();
 
@@ -48,7 +48,7 @@ export const Category = ({ id, name, categoryMenu, toggleCategoyMenu, closeMenu,
 			<button
 				onClick={(e) => {
 					e.stopPropagation();
-					toggleCategoyMenu(id);
+					toggleCategoryMenu(id);
 				}}
 				className={styles.button}
 				type="button"

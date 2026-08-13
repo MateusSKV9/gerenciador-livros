@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
-import type { CategoryType } from "../types/category";
+import type { Category } from "../schemas/category-schema";
 
 type useCategoryProps = {
-	categories: CategoryType[];
-	createCategory: (category: CategoryType) => void;
-	getCategory: (id: string) => CategoryType | undefined;
-	updateCategory: (id: string, data: Partial<CategoryType>) => void;
+	categories: Category[];
+	createCategory: (category: Category) => void;
+	getCategory: (id: string) => Category | undefined;
+	updateCategory: (id: string, data: Partial<Category>) => void;
 	deleteCategory: (id: string) => void;
 };
 

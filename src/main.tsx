@@ -1,11 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
+import { CategoryProvider, BookProvider, ThemeProvider } from "./providers";
 import { BrowserRouter } from "react-router";
-import { BookProvider } from "./providers/BookProvider.tsx";
-import { CategoryProvider } from "./providers/CategoryProvider.tsx";
-import { ThemeProvider } from "./providers/ThemeProvider.tsx";
+import App from "./App.tsx";
+import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
