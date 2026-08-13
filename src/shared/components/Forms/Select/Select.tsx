@@ -9,7 +9,7 @@ type SelectProps = {
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(({ label, options, ...props }: SelectProps, ref) => {
 	return (
-		<div className={styles.form_controll}>
+		<div className={styles.form_control}>
 			<label className={styles.label} htmlFor={props.id}>
 				{label}
 			</label>

@@ -9,11 +9,9 @@
 	color: var(--text);
 }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
 	.header {
 		flex-direction: column;
 		gap: 12px;
 	}
-
-  
 }

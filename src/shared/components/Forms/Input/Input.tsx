@@ -8,7 +8,7 @@ type InputProps = {
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(({ label, error, ...props }: InputProps, ref) => {
 	return (
-		<div className={styles.form_controll}>
+		<div className={styles.form_control}>
 			<label className={styles.label} htmlFor={props.id}>
 				{label}
 			</label>

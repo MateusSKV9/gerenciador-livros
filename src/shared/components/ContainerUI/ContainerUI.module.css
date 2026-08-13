@@ -19,7 +19,7 @@
 	gap: 24px;
 }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
 	.books {
 		grid-template-columns: 1fr;
 	}

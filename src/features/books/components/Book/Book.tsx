@@ -175,14 +175,14 @@ export const Book = React.memo(
 						{status !== "to_read" && (
 							<button
 								onClick={handleDecrease}
-								className={`${styles.progresss_button} ${styles.minus_button} button_behavior`}
+								className={`${styles.progress_button} ${styles.minus_button} button_behavior`}
 								type="button"
 								title="Adicionar Páginas"
 								disabled={currentPages === 0}
 							>
 								<svg
 									width={20}
-									className={`${styles.progresss_icon}`}
+									className={`${styles.progress_icon}`}
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 640 640"
 								>
@@ -206,13 +206,13 @@ export const Book = React.memo(
 						{status !== "to_read" && (
 							<button
 								onClick={handleIncrease}
-								className={`${styles.progresss_button} ${styles.plus_button} button_behavior`}
+								className={`${styles.progress_button} ${styles.plus_button} button_behavior`}
 								type="button"
 								title="Adicionar Páginas"
 								disabled={currentPages === totalPages}
 							>
 								<svg
-									className={`${styles.progresss_icon}`}
+									className={`${styles.progress_icon}`}
 									width={20}
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 640 640"

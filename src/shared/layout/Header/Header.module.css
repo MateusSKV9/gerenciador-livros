@@ -110,7 +110,7 @@
 	right: 20px;
 }
 
-@media screen and (min-width: 601px) {
+@media (min-width: 601px) {
 	.wrapper {
 		display: flex !important;
 	}
@@ -120,14 +120,14 @@
 	}
 }
 
-@media screen and (max-width: 890px) {
+@media (max-width: 890px) {
 	.header {
 		flex-direction: column;
 		gap: 12px;
 	}
 }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
 	.logo {
 		position: absolute;
 		left: 20px;
